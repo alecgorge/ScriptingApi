@@ -46,7 +46,7 @@ Api = {
 /**
  * Returns compass direction according to your rotation
  * @param degrees
- * @return
+ * @return string direction
  */
 Api.getCompassPointForDirection = function(degrees) {
 	if (0 <= degrees && degrees < 22.5) {
@@ -72,6 +72,10 @@ Api.getCompassPointForDirection = function(degrees) {
 	}
 };
 
+/**
+	Takes a result like the one from player.getRotation() and returns the axis
+	that player is pointed towards.
+*/
 Api.rotationToAxis = function (rotation) {
 	var degrees;
 

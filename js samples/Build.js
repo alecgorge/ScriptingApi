@@ -1,9 +1,9 @@
 /**
 	This file adds a command called build that allows you to spawn a
-	rectangular prism of blocks infront of you. It always spawns in 
-	the direction that you are facing and moves forward and to the
-	right. You will always be standing at the bottom left corner of 
-	the item you spawn.
+	rectangular prism of blocks at whatever block you are aiming at.
+	It always spawns on the block you are aiming at moves forward and to the
+	right. The block you are aiming at will always be in the bottom left
+	hand corner.
 
 	You can also use this command to clear an area if you use specify
 	0 as the block type.
@@ -21,6 +21,7 @@
 	tall.
 	
 	@todo Support vertical "building"
+	@todo Support negative numbers/offsets
 */
 Api.onCommand(function (player, split) {
 	var command = split[0].substring(1);
