@@ -10,27 +10,6 @@ Api.onCommand(function (player, split) {
 		player.sendMessage(Color.Red + 'Syntax is /'+command+' blockType length width height');
 	};
 		
-	var rotationToAxis = function (rotation) {
-		degrees = ((rotation - 90) % 360);
-		if (degrees < 0) degrees+= 360.0;
-
-		var getXYZ = function (degrees) {
-			if (0 <= degrees && degrees < 67.5) {
-				return "x-";
-			} else if (67.5 <= degrees && degrees < 112.5) {
-				return "z-";
-			} else if (112.5 <= degrees && degrees < 202.5) {
-				return "x+";
-			} else if (202.5 <= degrees && degrees < 292.5) {
-				return "z+";
-			} else if (292.5 <= degrees && degrees < 360.0) {
-				return "x-";
-			}
-		};
-		
-		return getXYZ(degrees);
-	};
-	
 	if(command == "build") {
 		var blockType = parseInt(args[0]);
 		var length = parseInt(args[1]);
@@ -64,7 +43,7 @@ Api.onCommand(function (player, split) {
 		var x = player.getX();
 		var y = player.getY();
 		var z = player.getZ() - 1;
-		var rot = rotationToAxis(player.getRotation());
+		var rot = Api.rotationToAxis(player.getRotation());
 		var length_offset = 1;
 		
 		var limits = {};
