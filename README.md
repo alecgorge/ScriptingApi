@@ -16,7 +16,7 @@ The best way to learn is to look at the files in the "js samples/" directory.
 
 * You can call all the native methods of Java objects. For example, when Player is an argument to a callback, you can use all the methods listed on [this page](http://hey0.net/javadoc/index.html?Player.html).
 * The list of hooks and arguments is available [here](http://hey0.net/javadoc/index.html?PluginListener.html).
-* To get the instance of [Server](http://hey0.net/javadoc/index.html?Server.html), either use this inside a callback or use Api.getServer();
+* To get the instance of [Server](http://hey0.net/javadoc/index.html?Server.html), either use "this" inside a callback or use Api.getServer();
 * To do an INFO level log, use Api.getLog().info("log message") to get an instance of the [Logger](http://download.oracle.com/javase/1.5.0/docs/api/java/util/logging/Logger.html) class and call the info method.
 * To create an instance of [HitBlox](http://hey0.net/javadoc/index.html?HitBlox.html), use the Api.createHitBlox(player) method.
 * To send a message to all players use the Api.broadcast() method. broadcast takes three arguments, the first is the message to send, the second can be null or it can be a group to limit a message to, the third can be null or a boolean. If the third argument is true, broadcast will send a message to everyone NOT in the specified group.
