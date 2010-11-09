@@ -1,4 +1,27 @@
+/**
+	This file adds a command called build that allows you to spawn a
+	rectangular prism of blocks infront of you. It always spawns in 
+	the direction that you are facing and moves forward and to the
+	right. You will always be standing at the bottom left corner of 
+	the item you spawn.
 
+	You can also use this command to clear an area if you use specify
+	0 as the block type.
+	
+	Examples:
+	
+	/build 1 10 5 3
+	
+	That constructs a prism 10 blocks long, 5 blocks wide and 3 blocks
+	tall out of smooth stone.
+	
+	/build 0 10 5 3
+	
+	That constructs a tunnel 10 blocks long, 5 blocks wide and 3 blocks
+	tall.
+	
+	@todo Support vertical "building"
+*/
 Api.onCommand(function (player, split) {
 	var command = split[0].substring(1);
 	var args = [];
@@ -40,70 +63,17 @@ Api.onCommand(function (player, split) {
 			return true;
 		}
 		
-		var x = player.getX();
-		var y = player.getY();
-		var z = player.getZ() - 1;
-		var rot = Api.rotationToAxis(player.getRotation());
-		var length_offset = 1;
+		var target = Api.createHitBlox(player);
+		var block = target.getTargetBlock();
 		
-		var limits = {};
-		var doSubtractX = false;
-		var doSubtractZ = false;
-		limits.y = y + height - 1;
+		var x = block.getX();
+		var y = block.getY()+1;
+		var z = block.getZ();
 		
-		if(rot == "x-") {
-			// one block offset so it doesn't destory the block you are standing on
-			x--;
-			
-			limits.x = x - length;
-			limits.z = z - width;
-			doSubtractX = true;
-			doSubtractZ = true;
-		} else if (rot == "x+") {
-			x++;
-			
-			limits.x = x + length;
-			limits.z = z + width;
-		} else if (rot == "z-") {
-			z--;
-			
-			limits.x = x + width;
-			limits.z = z - length;
-			doSubtractX = false;
-			doSubtractZ = true;
-		} else if (rot == "z+") {
-			z++;
-			
-			limits.x = x - width;
-			limits.z = z + length;
-			doSubtractX = true;
-			doSubtractZ = false;
-		}
+		var block = new BlockBuilder();
+		block.addPrism(blockType, [0, 0, 0], length, width, height);
+		block.attachTo(x,y,z, player.getRotation());
 		
-		// println(sprintf("x: %s, y: %s, z: %s, rot: %s, blockType: %s", x, y, z, rot, blockType));
-		// println(sprintf("limits.x: %s, limits.y: %s, limits.z: %s", limits.x, limits.y, limits.z));
-
-		if(doSubtractX == false && doSubtractZ == false)
-			for(var i = x; i < limits.x; i++)
-				for(var j = y; j <= limits.y; j++)
-					for(var f = z; f < limits.z; f++)
-						this.setBlockAt(blockType, i, j, f);
-		else if(doSubtractX == true && doSubtractZ == false)
-			for(var i = x; i > limits.x; i--)
-				for(var j = y; j <= limits.y; j++)
-					for(var f = z; f < limits.z; f++)
-						this.setBlockAt(blockType, i, j, f);
-		else if(doSubtractX == false && doSubtractZ == true)
-			for(var i = x; i < limits.x; i++)
-				for(var j = y; j <= limits.y; j++)
-					for(var f = z; f > limits.z; f--)
-						this.setBlockAt(blockType, i, j, f);
-		else if(doSubtractX == true && doSubtractZ == true)
-			for(var i = x; i > limits.x; i--)
-				for(var j = y; j >= limits.y; j--)
-					for(var f = z; f > limits.z; f--)
-						this.setBlockAt(blockType, i, j, f);
-
 		return true;
 	}
 });

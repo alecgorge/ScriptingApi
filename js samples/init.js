@@ -108,7 +108,7 @@ Colors = {
     Green : "§2",
     Blue : "§3",
     Red : "§4",
-    Purple : "§",
+    Purple : "§5",
     Gold : "§6",
     LightGray : "§7",
     Gray : "§8",

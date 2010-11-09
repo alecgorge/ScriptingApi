@@ -233,6 +233,7 @@ public class JSApi extends Plugin  {
 			if(split[0].equals("reloadjs")) {
 				loadAllJS();
 				log.info("JS plugins reloaded.");
+				return true;
 			}
 			Object[] r = trigger("consoleCommand", new Object[] {getJSContext(), split});
 			

@@ -1,4 +1,12 @@
+/**
+	This file adds a command called "items" that allows you to retrieve
+	items using a regex search. All *'s are replaced with (.*) for regex
+	compatibility. Here is an example:
 
+	/items diamond*axe 1 
+
+	That would give you a Diamond Axe and a Diamond Pickaxe.
+*/
 Api.onCommand(function (player, split) {
 	var command = split[0].substring(1);
 	var args = [];
