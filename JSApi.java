@@ -3,10 +3,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
@@ -60,6 +62,13 @@ public class JSApi extends Plugin  {
 	public void initialize() {
 		pluginName = name;
 		pluginVersion = version;
+		
+		List<ScriptEngineFactory> factories = manager.getEngineFactories();
+		if(factories.size() == 0) {
+			log.severe("You have no scripting engines! Install Rhino!");
+			return;
+		}
+		
 		js = manager.getEngineByName("ECMAScript");
 		js_func = (Invocable) js;
 		
