@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import javax.script.ScriptException;
 
+import net.minecraft.server.MinecraftServer;
+
 public class MinecraftJSApi {
 	public static Hashtable<String, ArrayList<Object>> bindings = new Hashtable<String, ArrayList<Object>>();
 	
@@ -20,12 +22,24 @@ public class MinecraftJSApi {
 		return JSApi.log;
 	}
 	
+	public static etc getEtc () {
+		return etc.getInstance();
+	}
+	
 	public static Connection getSQLConnection() {
 		return etc.getSQLConnection();
 	}
 	
 	public static Server getServer() {
 		return etc.getServer();
+	}
+	
+	public static PluginLoader getLoader() {
+		return etc.getLoader();
+	}
+	
+	public static MinecraftServer getMCServer() {
+		return etc.getMCServer();
 	}
 	
 	public static HitBlox createHitBlox(Object p) {

@@ -4,6 +4,9 @@ Api = {
 	version : Minecraft.getPluginVersion(),
 	name : Minecraft.getPluginName(),
 	log : Minecraft.getLog(),
+	pluginLoader : Minecraft.getLoader(),
+	mcServer : Minecraft.getMCServer(),
+	etc : Minecraft.getEtc();
 	getSQLConnection : function () {
 		return Minecraft.getSQLConnection();
 	},
