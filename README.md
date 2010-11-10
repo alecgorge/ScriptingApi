@@ -24,8 +24,8 @@ The best way to learn is to look at the files in the "js samples/" directory.
 * A key:value object of all the item names and their id's is available as Items["Air"], Items["Stone"], etc... Blocks is aliased to Items.
 * A key:value object of all the ids and their respective names is available as ItemIds[0], ItemIds[1], etc...
 * You can access the [etc](http://hey0.net/javadoc/etc.html) class via Api.etc.
-* You can get the connection to MySQL server via Api.getSQLConnection().
-* You can access the current [DataSource](http://hey0.net/javadoc/index.html?DataSource.html) class ([MySQLSource](http://hey0.net/javadoc/index.html?MySQLSource.html) or [FileFileSource](http://hey0.net/javadoc/index.html?FlatFileSource.html)). 
+* You can get the connection to MySQL server via Api.getSQLConnection() (returned value is an instance of [Connect](http://download.oracle.com/javase/1.4.2/docs/api/java/sql/Connection.html)).
+* You can access the current [DataSource](http://hey0.net/javadoc/index.html?DataSource.html) class ([MySQLSource](http://hey0.net/javadoc/index.html?MySQLSource.html) or [FileFileSource](http://hey0.net/javadoc/index.html?FlatFileSource.html)) with Api.etc.getDataSource(). 
 
 ## The BlockBuilder class
 
