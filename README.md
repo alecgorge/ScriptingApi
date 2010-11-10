@@ -23,6 +23,9 @@ The best way to learn is to look at the files in the "js samples/" directory.
 * All of the colors for chat are available with Colors.Blue, Colors.Red, etc...
 * A key:value object of all the item names and their id's is available as Items["Air"], Items["Stone"], etc... Blocks is aliased to Items.
 * A key:value object of all the ids and their respective names is available as ItemIds[0], ItemIds[1], etc...
+* You can access the [etc](http://hey0.net/javadoc/etc.html) class via Api.etc.
+* You can get the connection to MySQL server via Api.getSQLConnection().
+* You can access the current [DataSource](http://hey0.net/javadoc/index.html?DataSource.html) class ([MySQLSource](http://hey0.net/javadoc/index.html?MySQLSource.html) or [FileFileSource](http://hey0.net/javadoc/index.html?FlatFileSource.html)). 
 
 ## The BlockBuilder class
 
