@@ -6,7 +6,7 @@ Api = {
 	log : Minecraft.getLog(),
 	getSQLConnection : function () {
 		return Minecraft.getSQLConnection();
-	}
+	},
 	createHitBlox : function (player) {
 		return Minecraft.createHitBlox(player);
 	},

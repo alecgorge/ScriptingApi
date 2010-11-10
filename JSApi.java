@@ -19,7 +19,7 @@ public class JSApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private String name = "JSApi";
-	private String version = "rev 2";
+	private String version = "rev 3";
 	protected String abbr = "JSApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
@@ -188,7 +188,7 @@ public class JSApi extends Plugin  {
 		}
 
 		public void onDisconnect(Player player) {
-			trigger("disconnect", player);
+			trigger("disconnect", new Object[] {getJSContext(), player});
 		}
 
 		public boolean onChat(Player player, String message) {
