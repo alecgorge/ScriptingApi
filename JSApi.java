@@ -21,7 +21,7 @@ public class JSApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private String name = "JSApi";
-	private String version = "rev 3";
+	private String version = "rev 4";
 	protected String abbr = "JSApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
