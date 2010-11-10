@@ -6,7 +6,7 @@ Api = {
 	log : Minecraft.getLog(),
 	pluginLoader : Minecraft.getLoader(),
 	mcServer : Minecraft.getMCServer(),
-	etc : Minecraft.getEtc();
+	etc : Minecraft.getEtc(),
 	getSQLConnection : function () {
 		return Minecraft.getSQLConnection();
 	},
