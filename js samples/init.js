@@ -17,9 +17,6 @@ Api = {
 	pluginLoader : Minecraft.getLoader(),
 	mcServer : Minecraft.getMCServer(),
 	etc : Minecraft.getEtc(),
-	getSQLConnection : function () {
-		return Minecraft.getSQLConnection();
-	},
 	createHitBlox : function (player) {
 		return Minecraft.createHitBlox(player);
 	},

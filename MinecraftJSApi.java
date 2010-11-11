@@ -1,4 +1,3 @@
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.logging.Logger;
@@ -24,10 +23,6 @@ public class MinecraftJSApi {
 	
 	public static etc getEtc () {
 		return etc.getInstance();
-	}
-	
-	public static Connection getSQLConnection() {
-		return etc.getSQLConnection();
 	}
 	
 	public static Server getServer() {
