@@ -27,6 +27,7 @@ The best way to learn is to look at the files in the "js samples/" directory.
 * You can access the [etc](http://hey0.net/javadoc/etc.html) class via Api.etc.
 * You can get the connection to MySQL server via Api.getSQLConnection() (returned value is an instance of [Connect](http://download.oracle.com/javase/1.4.2/docs/api/java/sql/Connection.html)).
 * You can access the current [DataSource](http://hey0.net/javadoc/index.html?DataSource.html) class ([MySQLSource](http://hey0.net/javadoc/index.html?MySQLSource.html) or [FileFileSource](http://hey0.net/javadoc/index.html?FlatFileSource.html)) with Api.etc.getDataSource(). 
+* Create new instances of [Item](http://hey0.net/javadoc/index.html?Item.html) and [Location](http://hey0.net/javadoc/index.html?Location.html) with Api.createItem() and Api.createLocation().
 
 ## The BlockBuilder class
 
