@@ -3,6 +3,16 @@ Api = {
 	server : Minecraft.getServer(),
 	version : Minecraft.getPluginVersion(),
 	name : Minecraft.getPluginName(),
+	createItem : function (a,b,c) {
+		if(typeof(a) == "undefined") return Minecraft.createItem();
+		else if(typeof(c) == "undefined") return Minecraft.createItem(a,b);
+		return Minecraft.createItem(a,b,c);
+	},
+	createLocation : function (a,b,c,x,y) {
+		if(typeof(a) == "undefined") return Minecraft.createLocation();
+		else if(typeof(x) == "undefined") return Minecraft.createLocation(a,b,c);
+		return Minecraft.createLocation(a,b,c,x,y);
+	},
 	log : Minecraft.getLog(),
 	pluginLoader : Minecraft.getLoader(),
 	mcServer : Minecraft.getMCServer(),

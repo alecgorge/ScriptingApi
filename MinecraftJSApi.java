@@ -46,6 +46,30 @@ public class MinecraftJSApi {
 		return new HitBlox((Player) p);
 	}
 	
+	public static Item createItem(int a, int b, int c) {
+		return new Item(a,b,c);
+	}
+	
+	public static Item createItem(int a, int b) {
+		return new Item(a,b);
+	}
+	
+	public static Item createItem() {
+		return new Item();
+	}
+	
+	public static Location createLocation(double a, double b, double c, float x, float y) {
+		return new Location(a,b,c,x,y);
+	}
+	
+	public static Location createLocation(double a, double b, double c) {
+		return new Location(a,b,c);
+	}
+	
+	public static Location createLocation() {
+		return new Location();
+	}
+	
 	public static void broadcast(String message, String group, boolean reverse) {
 		for (Player p : etc.getServer().getPlayerList()) {
 			if(group.equals("") || (!reverse && p.isInGroup(group))) {
