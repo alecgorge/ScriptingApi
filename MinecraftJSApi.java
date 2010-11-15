@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.logging.Logger;
@@ -11,6 +12,15 @@ public class MinecraftJSApi {
 	
 	public static String getPluginName () {
 		return JSApi.pluginName;
+	}
+	
+	public static void loadJar (String jar) {
+		try {
+			ClasspathHacker.addFile(jar);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static String getPluginVersion () {

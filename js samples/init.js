@@ -51,6 +51,8 @@ Api = {
 	onBlockDestroy : function (c) { this.bind("blockDestroy", c); },
 	onArmSwing : function (c) { this.bind("armSwing", c); },
 	onInventoryChange : function (c) { this.bind("inventoryChange", c); },
+	onCraftInventoryChange : function (c) { this.bind("craftInventoryChange", c); },
+	onEquipmentChange : function (c) { this.bind("equipmentChange", c); },
 	onComplexBlockChange : function (c) { this.bind("complexBlockChange", c); },
 	onSendComplexBlock : function (c) { this.bind("sendComplexBlock", c); },
 };
