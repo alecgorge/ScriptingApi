@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,13 +16,13 @@ import javax.script.ScriptException;
 
 /**
 *
-* @author Nijiko
+* @author alecgorge
 */
 public class JSApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private String name = "JSApi";
-	private String version = "rev 6";
+	private String version = "rev 7";
 	protected String abbr = "JSApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
@@ -79,14 +80,17 @@ public class JSApi extends Plugin  {
 		log.info(name + " initialized ("+version+")");
 		// Uncomment as needed.
 		etc.getLoader().addListener( PluginLoader.Hook.ARM_SWING, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BAN, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_CREATED, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_DESTROYED, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.CHAT, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.COMMAND, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.COMPLEX_BLOCK_SEND, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.DISCONNECT, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.INVENTORY_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.CRAFTINVENTORY_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.EQUIPMENT_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.DISCONNECT, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.IPBAN, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.KICK, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.LOGIN, l, this, PluginListener.Priority.MEDIUM);
@@ -103,7 +107,14 @@ public class JSApi extends Plugin  {
 		String dir = System.getProperty("user.dir").concat(File.separator+"js");
 		
 		File directory = new File(dir);
-		File[] files = directory.listFiles();
+		File[] files = directory.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				if(pathname.isFile()) return true;
+				return false;
+			}
+		});
 		
 		PropertiesFile pf = new PropertiesFile("JSApi.properties");
 		pf.load();
@@ -330,5 +341,31 @@ public class JSApi extends Plugin  {
 
 			return false;
 		}
+
+		public boolean onCraftInventoryChange(Player player ) {
+			Object[] r = trigger("craftInventoryChange", new Object[] {getJSContext(), player});
+			
+			for(Object o : r) {
+				if(o != null && ((Boolean)o).booleanValue()) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		public boolean onEquipmentChange(Player player ) {
+			Object[] r = trigger("equipmentChange", new Object[] {getJSContext(), player});
+			
+			for(Object o : r) {
+				if(o != null && ((Boolean)o).booleanValue()) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		
+		
 	}
 }
