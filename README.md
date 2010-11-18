@@ -29,6 +29,10 @@ The best way to learn is to look at the files in the "js samples/" directory.
 * You can access the current [DataSource](http://hey0.net/javadoc/index.html?DataSource.html) class ([MySQLSource](http://hey0.net/javadoc/index.html?MySQLSource.html) or [FileFileSource](http://hey0.net/javadoc/index.html?FlatFileSource.html)) with Api.etc.getDataSource(). 
 * Create new instances of [Item](http://hey0.net/javadoc/index.html?Item.html) and [Location](http://hey0.net/javadoc/index.html?Location.html) with Api.createItem() and Api.createLocation().
 
+## Including external JARs
+
+* If you need to include classes from an external JAR you can use the new Api.loadJar methods. The only argument it accepts is the path to jar relative to the directory minecraft_server.jar is in.
+
 ## The BlockBuilder class
 
 The BlockBuilder class is meant to make building simple to complex objects really easy. It accounts for the users rotation and the axes.

@@ -23,46 +23,24 @@
 	@todo Support vertical "building"
 	@todo Support negative numbers/offsets
 */
-Api.onCommand(function (player, split) {
-	var command = split[0].substring(1);
-	var args = [];
-	if(split.length > 1) {
-		args = split.slice(1);
-	}
-	
+Api.onCommand(function (player, split) {	
 	var printSyntax = function () {
-		player.sendMessage(Color.Red + 'Syntax is /'+command+' blockType length width height');
+		player.sendMessage(Color.Red + 'Syntax is /build blockType length width height');
 	};
+	
+	if(Api.isCommand("build", split)) {
+		var args = Api.parseArgs(["block", "number", "number", "number"], [], split);
 		
-	if(command == "build") {
-		var blockType = parseInt(args[0]);
-		var length = parseInt(args[1]);
-		var width = parseInt(args[2]);
-		var height = parseInt(args[3]);
-		
-		if(isNaN(blockType)) {
-			if(typeof(blockType) == "undefined") {
-				printSyntax();
-				return true;
-			}
-			
-			blockType = -1;
-			for(i in Blocks) {
-				if(i == blockType) {
-					blockType = Blocks[i];
-				}
-			}
-			
-			if(blockType == -1) {
-				printSyntax();
-				return true;
-			}
-		}
-		
-		if(isNaN(length) || isNaN(width) || isNaN(height)) {
+		if(!args) {
 			printSyntax();
 			return true;
 		}
+	
+		var blockType = args[0];
+		var length = args[1];
+		var width = args[2];
+		var height = args[3];
+
 		
 		var target = Api.createHitBlox(player);
 		var block = target.getTargetBlock();

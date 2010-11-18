@@ -1,23 +1,19 @@
 Api.onCommand(function (player, split) {
-	var command = split[0].substring(1);
-	var args = [];
-	if(split.length > 1) {
-		args = split.slice(1);
-	}
-		
 	var printSyntax = function () {
-		player.sendMessage(Color.Red + 'Syntax is /'+command+' radius findID replaceID');
+		player.sendMessage(Color.Red + 'Syntax is /items search quanity.Search is wildcard (*) enabled');
 	};
+	
+	if(Api.isCommand("replace", split)) {
+		var args = Api.parseArgs(["number", "block", "block"], [], split);
 		
-	if(command == "replace") {
-		var radius = parseInt(args[0]);
-		var find = parseInt(args[1]);
-		var replace = parseInt(args[2]);
-		
-		if(isNaN(radius) || isNaN(find) || isNaN(replace)) {
+		if(!args) {
 			printSyntax();
 			return true;
 		}
+		
+		var radius = args[0];
+		var find = args[1];
+		var replace = args[2];
 		
 		var x = player.getX();
 		var y = player.getY();

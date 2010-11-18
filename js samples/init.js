@@ -55,6 +55,86 @@ Api = {
 	onEquipmentChange : function (c) { this.bind("equipmentChange", c); },
 	onComplexBlockChange : function (c) { this.bind("complexBlockChange", c); },
 	onSendComplexBlock : function (c) { this.bind("sendComplexBlock", c); },
+	parsers : {
+		'all' : function (input) {
+			return [true, input];
+		},
+		'number' : function (input) {
+			var n = parseInt(input);
+			if(isNaN(n)) {
+				return false;
+			}
+			return [true, n];
+		},
+		'block' : function (input) {
+			var lower = input.toLowerCase();
+			var id = -1;
+			
+			if(isNaN(parseInt(input))) {
+				for(var i in Items) {
+					if(i.toLowerCase() == lower) {
+						id = Items[i];
+						break;
+					}
+				}
+			}
+			else {
+				id = parseInt(input);
+			}
+			
+			if(typeof(ItemIds[id]) == "string") {
+				return [true, id];
+			}
+			
+			return false;
+		},
+		'string' : function (input) {
+			return [true, input+""];
+		},
+		
+	},
+	parseArgs : function (requiredArgs, optionalArgs, split) {
+		var args = [];
+		if(split.length > 1) {
+			args = split.slice(1);
+		}
+		
+		if(args.length >= requiredArgs.length && args.length <= requiredArgs.length+optionalArgs.length) {
+			var r = [];
+			// test required
+			for(var i in requiredArgs) {
+				var res = this.parsers[requiredArgs[i]](args[i]);
+				if(res === false) {
+					return false;
+				}
+				r.push(res[1]);
+			}
+			
+			if(optionalArgs.length > 0) {
+				for(var i in optionalArgs) {
+					var argIndex = requiredArgs.length - 1 + i;
+					if(argIndex < args.length) {
+						var res = this.parsers[requiredArgs[i]](args[argIndex]);
+						if(res === false) {
+							return false;
+						}
+						r.push(res[1]);
+					}
+				}
+			}
+			
+			return r;
+		}
+		return false;
+	},
+	isCommand : function(testCommand, split) {
+		var command = split[0].substring(1);
+		
+		if(command != testCommand) {
+			return false;
+		}
+		return true;
+	}
 };
 
 /* Directions */
