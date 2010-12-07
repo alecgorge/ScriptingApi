@@ -1,8 +1,11 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
+import javax.script.Invocable;
 import javax.script.ScriptException;
 
 import net.minecraft.server.MinecraftServer;
@@ -11,7 +14,7 @@ public class MinecraftJSApi {
 	public static Hashtable<String, ArrayList<Object>> bindings = new Hashtable<String, ArrayList<Object>>();
 	
 	public static String getPluginName () {
-		return JSApi.pluginName;
+		return ScriptingApi.pluginName;
 	}
 	
 	public static void loadJar (String jar) {
@@ -24,11 +27,11 @@ public class MinecraftJSApi {
 	}
 	
 	public static String getPluginVersion () {
-		return JSApi.pluginVersion;
+		return ScriptingApi.pluginVersion;
 	}
 	
 	public static Logger getLog () {
-		return JSApi.log;
+		return ScriptingApi.log;
 	}
 	
 	public static etc getEtc () {
@@ -99,11 +102,15 @@ public class MinecraftJSApi {
 			for(Object o : bindings.get(key)) {
 				if(o.getClass().toString().endsWith("InterpretedFunction")) {
 					try {
-						// System.out.println(o.getClass().toString());
-						results.add(JSApi.js_func.invokeMethod(o, "call", args));
-					} catch (ScriptException e) {
-						e.printStackTrace();
-					} catch (NoSuchMethodException e) {
+					    Collection c = ScriptingApi.invoc.values();
+					    Iterator itr = c.iterator();
+					    while(itr.hasNext()) {
+					    	Invocable i = (Invocable)itr.next();
+
+							results.add(i.invokeMethod(o, "call", args));
+					    }
+					    	
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}

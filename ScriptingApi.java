@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,21 +19,22 @@ import javax.script.ScriptException;
 *
 * @author alecgorge
 */
-public class JSApi extends Plugin  {
+public class ScriptingApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
-	private String name = "JSApi";
-	private String version = "rev 7";
-	protected String abbr = "JSApi";
+	private String name = "ScriptingApi";
+	private String version = "rev 8";
+	protected String abbr = "ScriptingApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
 	String message;
 	public static ScriptEngineManager manager = new ScriptEngineManager();
-	public static ScriptEngine js;
-	public static Invocable js_func;
+	public static HashMap<String, ScriptEngine> engines = new HashMap<String, ScriptEngine>();
+	public static HashMap<String, Invocable> invoc = new HashMap<String, Invocable>();
 	public static String pluginName = "";
 	public static String pluginVersion = "";
 	public String minGroup = "";
+	public String engAbbr = "";
 	
 	public void enable() {
 	}	
@@ -46,9 +48,9 @@ public class JSApi extends Plugin  {
 		MinecraftJSApi.bindings.clear();
 	}
 	
-	public void doJsFile(String f) {
+	public void doFile(String f, String ext) {
 		try {
-			js.eval(new InputStreamReader(new FileInputStream(f), "UTF-8"));
+			engines.get(ext).eval(new InputStreamReader(new FileInputStream(f), "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ScriptException e) {
@@ -64,18 +66,34 @@ public class JSApi extends Plugin  {
 		pluginName = name;
 		pluginVersion = version;
 		
+		File jython = new File(System.getProperty("user.dir") + File.separator + "plugins" + File.separator + "jython.jar");
+		if(jython.exists()) {
+			try {
+				ClasspathHacker.addFile(jython);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		List<ScriptEngineFactory> factories = manager.getEngineFactories();
 		if(factories.size() == 0) {
 			log.severe("You have no scripting engines! Install Rhino!");
 			return;
 		}
 		
-		js = manager.getEngineByName("ECMAScript");
-		js_func = (Invocable) js;
+		engines.put("js", manager.getEngineByName("ECMAScript"));
+		invoc.put("js", (Invocable) engines.get("js"));
+		engines.get("js").put("Minecraft", new MinecraftJSApi());
 		
-		js.put("Minecraft", new MinecraftJSApi());
+		if(jython.exists()) {
+			engines.put("py", manager.getEngineByName("python"));
+			invoc.put("py", (Invocable) engines.get("py"));
+			engines.get("py").put("Minecraft", new MinecraftJSApi());
+		}
 		
-		loadAllJS();
+		//if()
+		
+		loadAll();
 		
 		log.info(name + " initialized ("+version+")");
 		// Uncomment as needed.
@@ -101,7 +119,7 @@ public class JSApi extends Plugin  {
 		etc.getLoader().addListener( PluginLoader.Hook.TELEPORT, l, this, PluginListener.Priority.MEDIUM);
 	}
 	
-	public void loadAllJS () {
+	public void loadAll () {
 		MinecraftJSApi.bindings.clear();
 		
 		String dir = System.getProperty("user.dir").concat(File.separator+"js");
@@ -116,9 +134,14 @@ public class JSApi extends Plugin  {
 			}
 		});
 		
-		PropertiesFile pf = new PropertiesFile("JSApi.properties");
-		pf.load();
-		String group = pf.getString("min-group-level");
+		PropertiesFile pf = new PropertiesFile("ScriptingApi.properties");
+		try {
+			pf.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String group = pf.getString("min-group-level", "admin");
 		pf.save();
 		
 		if(group != null && !group.equals("")) {
@@ -126,14 +149,38 @@ public class JSApi extends Plugin  {
 		}
 			
 		// some 'init'ial setup that needs to be done FIRST
-		doJsFile(dir+File.separator+"init.js");
+		doFile(dir+File.separator+"init.js", "js");
 
 		for (int index = 0; index < files.length; index++) {
 			if(!files[index].getName().equals("init.js")) {
-				doJsFile(files[index].getPath());
+				doFile(files[index].getPath(), "js");
 				log.info("Processed plugin '"+files[index].getName()+"'.");
 			}
-		}		
+		}
+		
+		dir = System.getProperty("user.dir").concat(File.separator+"py");
+		
+		directory = new File(dir);
+		files = directory.listFiles(new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				if(pathname.isFile()) return true;
+				return false;
+			}
+		});
+
+			
+		// some 'init'ial setup that needs to be done FIRST
+		doFile(dir+File.separator+"init.py", "py");
+
+		for (int index = 0; index < files.length; index++) {
+			if(!files[index].getName().equals("init.py")) {
+				doFile(files[index].getPath(), "py");
+				log.info("Processed plugin '"+files[index].getName()+"'.");
+			}
+		}
+				
 	}
 
 	// Sends a message to all players!
@@ -152,7 +199,7 @@ public class JSApi extends Plugin  {
 	}
 
 	public class Listener extends PluginListener {
-		JSApi p;
+		ScriptingApi p;
 		
 		public String join(String[] strings, String separator) {
 		    StringBuffer sb = new StringBuffer();
@@ -164,7 +211,7 @@ public class JSApi extends Plugin  {
 		}
 		
 		// This controls the accessibility of functions / variables from the main class.
-		public Listener(JSApi plugin) {
+		public Listener(ScriptingApi plugin) {
 			p = plugin;
 		}
 		
@@ -233,7 +280,7 @@ public class JSApi extends Plugin  {
 				}
 				
 				if(isgroup) {
-					loadAllJS();
+					loadAll();
 					player.sendMessage("JS plugins reloaded.");
 					return true;
 				}
@@ -250,9 +297,9 @@ public class JSApi extends Plugin  {
 		}
 
 		public boolean onConsoleCommand(String[] split) {
-			if(split[0].equals("reloadjs")) {
-				loadAllJS();
-				log.info("JS plugins reloaded.");
+			if(split[0].equals("reloadscripts")) {
+				loadAll();
+				log.info("Scripted plugins reloaded.");
 				return true;
 			}
 			Object[] r = trigger("consoleCommand", new Object[] {getJSContext(), split});
