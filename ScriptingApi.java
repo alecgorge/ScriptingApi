@@ -117,6 +117,32 @@ public class ScriptingApi extends Plugin  {
 		etc.getLoader().addListener( PluginLoader.Hook.PLAYER_MOVE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.SERVERCOMMAND, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.TELEPORT, l, this, PluginListener.Priority.MEDIUM);
+		
+		
+		etc.getLoader().addListener( PluginLoader.Hook.ATTACK, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_BROKEN, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_PHYSICS, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_PLACE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_RIGHTCLICKED, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.DAMAGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.EXPLODE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.FLOW, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.HEALTH_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.IGNITE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.ITEM_DROP, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.ITEM_PICK_UP, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.ITEM_USE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.LIQUID_DESTROY, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.MOB_SPAWN, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.REDSTONE_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_COLLISION, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_CREATE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_DAMAGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_DESTROYED, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_ENTERED, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_POSITIONCHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_UPDATE, l, this, PluginListener.Priority.MEDIUM);
+		
 	}
 	
 	public void loadAll () {
@@ -266,12 +292,11 @@ public class ScriptingApi extends Plugin  {
 					return true;
 				}
 			}
-			// p.bubble("chat", Player, message);
 			return false;
 		}
 
 		public boolean onCommand(Player player, String[] split) {
-			if(split[0].equals("/reloadjs")) {
+			if(split[0].equals("/reloadscripts")) {
 				boolean isgroup = false;
 				for(String g : player.getGroups()) {
 					if( g.equals(minGroup) ) {
@@ -281,7 +306,7 @@ public class ScriptingApi extends Plugin  {
 				
 				if(isgroup) {
 					loadAll();
-					player.sendMessage("JS plugins reloaded.");
+					player.sendMessage("Scripted plugins reloaded.");
 					return true;
 				}
 			}
@@ -292,7 +317,6 @@ public class ScriptingApi extends Plugin  {
 					return true;
 				}
 			}
-			// p.bubble("command", player.getName(), join(split, " "));
 			return false;
 		}
 
@@ -414,5 +438,181 @@ public class ScriptingApi extends Plugin  {
 		}
 		
 		
+		public boolean onConsoleCommand(LivingEntity attacker, LivingEntity defender, java.lang.Integer amount) {
+			Object[] r = trigger("attack", new Object[] {getJSContext(), attacker, defender, amount});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onBlockBreak(Player player, Block block) {
+			Object[] r = trigger("blockBreak", new Object[] {getJSContext(), player, block});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onBlockPlace(Player player, Block blockPlaced, Block blockClicked, Item itemInHand) {
+			Object[] r = trigger("blockPlace", new Object[] {getJSContext(), player, blockPlaced, blockClicked, itemInHand});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onBlockPhysics(Block block, boolean placed) {
+			Object[] r = trigger("blockPhysics", new Object[] {getJSContext(), block, placed});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public void onBlockRightClicked(Player player, Block blockClicked, Item item) {
+			Object[] r = trigger("blockRightClicked", new Object[] {getJSContext(), player, blockClicked, item});
+		}
+
+		public boolean onDamage(PluginLoader.DamageType type, BaseEntity attacker, BaseEntity defender, int amount) {
+			Object[] r = trigger("damage", new Object[] {getJSContext(), type, attacker, defender, amount});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onExplode(Block block) {
+			Object[] r = trigger("explode", new Object[] {getJSContext(), block});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onFlow(Block blockFrom, Block blockTo) {
+			Object[] r = trigger("flow", new Object[] {getJSContext(), blockFrom, blockTo});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onHealthChange(Player player, int oldValue, int newValue) {
+			Object[] r = trigger("healthChange", new Object[] {getJSContext(), player, oldValue, newValue});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onIgnite(Block block, Player player) {
+			Object[] r = trigger("ignite", new Object[] {getJSContext(), block, player});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onItemDrop(Player player, Item item) {
+			Object[] r = trigger("itemDrop", new Object[] {getJSContext(), player, item});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onItemPickUp(Player player, Item item) {
+			Object[] r = trigger("itemPickUp", new Object[] {getJSContext(), player, item});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public boolean onItemUse(Player player, Block blockPlaced, Block blockClicked, Item item) {
+			Object[] r = trigger("itemUse", new Object[] {getJSContext(), player, blockPlaced, blockClicked, item});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public PluginLoader.HookResult onLiquidDestroy(PluginLoader.HookResult currentState, int liquidBlockId, Block targetBlock) {
+			Object[] r = trigger("liquidDestroy", new Object[] {getJSContext(), currentState, liquidBlockId, targetBlock});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return PluginLoader.HookResult.PREVENT_ACTION;
+			return PluginLoader.HookResult.DEFAULT_ACTION;
+		}
+
+		public boolean onMobSpawn(Mob mob) {
+			Object[] r = trigger("mobSpawn", new Object[] {getJSContext(), mob});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public int onRedstoneChange(Block block, int oldLevel, int newLevel)  {
+			Object[] r = trigger("redstoneChange", new Object[] {getJSContext(), block, oldLevel, newLevel});
+			
+			for(Object o : r)
+				if(o != null && ((Integer)o).intValue() != newLevel)
+					return ((Integer)o).intValue();
+			return newLevel;
+		}
+
+		public java.lang.Boolean onVehicleCollision(BaseVehicle vehicle, BaseEntity collisioner)  {
+			Object[] r = trigger("vehicleCollision", new Object[] {getJSContext(), vehicle, collisioner});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return (Boolean)o;
+			return false;
+		}
+
+		public boolean onVehicleDamage(BaseVehicle vehicle, BaseEntity attacker, int damage) {
+			Object[] r = trigger("vehicleDamage", new Object[] {getJSContext(), vehicle, attacker, damage});
+			
+			for(Object o : r)
+				if(o != null && ((Boolean)o).booleanValue())
+					return true;
+			return false;
+		}
+
+		public void onVehicleCreate(BaseVehicle vehicle) {
+			trigger("vehicleCreate", new Object[] {getJSContext(), vehicle});
+		}
+
+		public void onVehicleDestroyed(BaseVehicle vehicle) {
+			trigger("vehicleDestroyed", new Object[] {getJSContext(), vehicle});
+		}
+
+		public void onVehicleEnter(BaseVehicle vehicle) {
+			trigger("vehicleEnter", new Object[] {getJSContext(), vehicle});
+		}
+
+		public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
+			trigger("vehiclePosition", new Object[] {getJSContext(), vehicle});
+		}
+
+		public void onVehicleUpdate(BaseVehicle vehicle) {
+			trigger("vehicleUpdate", new Object[] {getJSContext(), vehicle});
+		}		
 	}
 }
