@@ -1,6 +1,6 @@
 Api.onCommand(function (player, split) {
 	var printSyntax = function () {
-		player.sendMessage(Color.Red + 'Syntax is /items search quanity.Search is wildcard (*) enabled');
+		player.sendMessage(Color.Red + 'Syntax is /replace radius findBlock replaceBlock');
 	};
 	
 	if(Api.isCommand("replace", split)) {

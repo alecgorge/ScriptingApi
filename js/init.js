@@ -28,14 +28,6 @@ Api = {
 		if(typeof(notInGroup) == "undefined") notInGroup = false;
 		Minecraft.broadcast(message, group, notInGroup);
 	},
-	registerCommand : function (command, callback) {
-		var command = split[0].substring(1);
-		var args = [];
-		if(split.length > 1) {
-			args = split.slice(1);
-		}
-		callback.apply(this.server, args);
-	},
 	onPlayerMove : function (c) { this.bind("playerMove", c); },
 	onTeleport : function (c) { this.bind("teleport", c); },
 	onLoginChecks : function (c) { this.bind("loginChecks", c); },
@@ -55,6 +47,30 @@ Api = {
 	onEquipmentChange : function (c) { this.bind("equipmentChange", c); },
 	onComplexBlockChange : function (c) { this.bind("complexBlockChange", c); },
 	onSendComplexBlock : function (c) { this.bind("sendComplexBlock", c); },
+	onConsoleCommand: function (c) { this.bind("onConsoleCommand", c); },
+	onBlockBreak: function (c) { this.bind("onBlockBreak", c); },
+	onBlockPlace: function (c) { this.bind("onBlockPlace", c); },
+	onBlockPhysics: function (c) { this.bind("onBlockPhysics", c); },
+	onBlockRightClicked: function (c) { this.bind("onBlockRightClicked", c); },
+	onDamage: function (c) { this.bind("onDamage", c); },
+	onExplode: function (c) { this.bind("onExplode", c); },
+	onFlow: function (c) { this.bind("onFlow", c); },
+	onHealthChange: function (c) { this.bind("onHealthChange", c); },
+	onIgnite: function (c) { this.bind("onIgnite", c); },
+	onItemDrop: function (c) { this.bind("onItemDrop", c); },
+	onItemPickUp: function (c) { this.bind("onItemPickUp", c); },
+	onItemUse: function (c) { this.bind("onItemUse", c); },
+	onLiquidDestroy: function (c) { this.bind("onLiquidDestroy", c); },
+	onMobSpawn: function (c) { this.bind("onMobSpawn", c); },
+	onRedstoneChange: function (c) { this.bind("onRedstoneChange", c); },
+	onVehicleCollision: function (c) { this.bind("onVehicleCollision", c); },
+	onVehicleDamage: function (c) { this.bind("onVehicleDamage", c); },
+	onVehicleCreate: function (c) { this.bind("onVehicleCreate", c); },
+	onVehicleDestroyed: function (c) { this.bind("onVehicleDestroyed", c); },
+	onVehicleEnter: function (c) { this.bind("onVehicleEnter", c); },
+	onVehiclePositionChange: function (c) { this.bind("onVehiclePositionChange", c); },
+	onVehicleUpdate: function (c) { this.bind("onVehicleUpdate", c); },
+
 	parsers : {
 		'all' : function (input) {
 			return [true, input];
@@ -114,7 +130,7 @@ Api = {
 				for(var i in optionalArgs) {
 					var argIndex = requiredArgs.length - 1 + i;
 					if(argIndex < args.length) {
-						var res = this.parsers[requiredArgs[i]](args[argIndex]);
+						var res = this.parsers[optionalArgs[i]](args[argIndex]);
 						if(res === false) {
 							return false;
 						}
@@ -128,12 +144,7 @@ Api = {
 		return false;
 	},
 	isCommand : function(testCommand, split) {
-		var command = split[0].substring(1);
-		
-		if(command != testCommand) {
-			return false;
-		}
-		return true;
+		return !(split[0].substring(1) != testCommand);
 	}
 };
 
@@ -234,6 +245,7 @@ function BlockBuilder() {
 		}
 		
 		this.blockRef[""+x+y+z] = this.blocks.push([id, x, y, z]);
+		return this;
 	};
 	
 	this.addPrism = function (id, start, length, width, height) {
@@ -248,7 +260,10 @@ function BlockBuilder() {
 			for(var j = sy; j <= ey; j++)
 				for(var f = sz; f < ez; f++)
 					this.add(id, i, j, f);
+		return this;
 	};
+	
+	this.prism = this.addPrism;
 	
 	this.attachTo = function(x, y, z, rot) {
 		var dir = Api.rotationToAxis(rot);
@@ -287,12 +302,138 @@ function BlockBuilder() {
 			else if(doX && !doZ)
 				Api.server.setBlockAt(ref[0], x - ref[3], y + ref[2], z + ref[1]);
 		}
+		return this;
 	}
 	
+	this.line = function (id,start,end) {
+		var arrmax = function() {
+			var max = this[0];
+			var len = this.length;
+			for (var i = 1; i < len; i++) if (this[i] > max) max = this[i];
+			return max;
+		};
+	
+		function pointsInLine (p1, p2) {
+			var pxd = p2['x'] - p1['x'];
+			var pzd = p2['z'] - p1['z'];
+			var pyd = p2['y'] - p1['y'];
+
+			// Find out steps
+			var steps = arrmax(p1['x'], p1['y'], p2['x'], p2['y'], p1['z'], p2['z']);
+
+			var coords = [p1];
+
+			for (var i = 0; i < steps; i++)
+				coords.push([
+					Math.round(p1.x += pxd / steps),
+					Math.round(p1.y += pyd / steps),
+					Math.round(p1.z += pzd / steps)
+				]);
+				
+			return coords;
+		}
+		var points = pointsInLine({x:start[0],y:start[1],z:start[2]},{x:end[0],y:end[1],z:end[2]});
+		
+		for(var i in points) {
+			this.add(id,points[i].x,points[i].y,points[i].z);
+		}
+		return this;
+	};
+	
+	this.circle = function (type, center, radius) {
+		radius = parseInt(radius);
+		for(var i in center) { center[i] = parseInt(center[i]); }
+		
+		function calculateEllipse(x, y, a, b, steps) {
+			if (steps == null) steps = 36;
+			var points = [];
+
+			// Angle is given by Degree Value
+			// var beta = -angle * (Math.PI / 180); //(Math.PI/180) converts Degree Value into Radians
+			var sinbeta = 1;//Math.sin(beta);
+			var cosbeta = 1;//Math.cos(beta);
+
+			for (var i = 0; i < 360; i += 360 / steps) {
+				var alpha = i * (Math.PI / 180);
+				var sinalpha = Math.sin(alpha);
+				var cosalpha = Math.cos(alpha);
+
+				var X = x + (a * cosalpha * cosbeta - b * sinalpha * sinbeta);
+				var Y = y + (a * cosalpha * sinbeta + b * sinalpha * cosbeta);
+
+				points.push([Math.round(X), Math.round(Y)]);
+			}
+
+			return points;
+		}
+		function ellipse (xc, yc, xr, yr) {
+			var points = [];
+			for(var xcoord = 0-xr; xcoord <= xr; xcoord++) {
+				var angle = Math.atan2(xcoord, ycoord);
+				points.push([xc+Math.cos(angle)*xr, yc+Math.sin(angle)*yr]);
+			}
+					
+			return points;
+		}
+		
+		var points = calculateEllipse(center[0], center[2], radius/2, radius/2,  36);
+		for(var i in points) {
+			this.add(type, points[i][0], center[1], points[i][1]);
+		}
+		
+		return this;
+	};
+	
+	this.sphere = function (type, center, radius) {
+		for(var i = 1; i < radius; i++)
+			this.circle(type, [center[0], center[1]-(radius-i), center[2]], i);
+		for(var i = radius; i > 0; i--)
+			this.circle(type, [center[0], center[1]+(radius-i), center[2]], i);
+		return this;
+	};
+	
+	this.pyramid = function (type, start, length, width) {
+		var i = 0;
+		while(i !== false) {
+			this.prism(type, [start[0]+i, start[1]+i, start[2]+i], length, width, 1);
+			
+			i++;
+			length -= 2;
+			width -= 2;
+			
+			if(length < 1 || width < 1) i = false;
+		}
+		return this;
+	}
+	
+    this.invertedCone = function (type, center, radius, height) {
+		var new_r = radius;
+		for (var y = -1; y < height-1; y++) {
+			new_r = radius - (radius * (y/height));
+			this.circle(type, center, new_r);
+		}
+		return this;		
+    };
+
+    this.cone = function (type, center, radius, height) {
+		var new_r;
+		for (var y = -1; y < height-1; y++) {
+			new_r = (radius * (y/height));
+			this.circle(type, center, new_r);
+		}
+		return this;
+    };
+	
+	this.cylinder = function (id, center, height, radius) {
+		for (var y = 0; y < height; y++)
+			this.circle(id, [center[0], center[1]+y, center[2]], radius);
+		return this;
+	};
+	
 	this.removeBlock = function(x, y, z) {
-		var ref = this.blockRef[""+x+y+z];
-		this.blocks[ref] = null;
-		this.blockRef[""+x+y+z] = null;
+		delete this.blocks[this.blockRef[""+x+y+z]];
+		delete this.blockRef[""+x+y+z];
+		return this;
 	};
 }
 
