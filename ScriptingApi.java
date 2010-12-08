@@ -88,7 +88,8 @@ public class ScriptingApi extends Plugin  {
 		if(jython.exists()) {
 			engines.put("py", manager.getEngineByName("python"));
 			invoc.put("py", (Invocable) engines.get("py"));
-			engines.get("py").put("Minecraft", new MinecraftJSApi());
+			if(engines.get("py") != null)
+				engines.get("py").put("Minecraft", new MinecraftJSApi());
 		}
 		
 		//if()
@@ -608,7 +609,7 @@ public class ScriptingApi extends Plugin  {
 		}
 
 		public void onVehiclePositionChange(BaseVehicle vehicle, int x, int y, int z) {
-			trigger("vehiclePosition", new Object[] {getJSContext(), vehicle});
+			trigger("vehiclePositionChange", new Object[] {getJSContext(), vehicle, x, y, z});
 		}
 
 		public void onVehicleUpdate(BaseVehicle vehicle) {

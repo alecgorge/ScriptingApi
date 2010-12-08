@@ -97,6 +97,88 @@ class Api:
 		return !(split[0][2:] != testCommand)
 		
 	@staticmethod
+	def getCompassPointForDirection(degrees):
+		if 0 <= degrees and degrees < 22.5:
+			return "N"
+		else if 22.5 <= degrees and degrees < 67.5:
+			return "NE"
+		else if 67.5 <= degrees and degrees < 112.5:
+			return "E"
+		else if 112.5 <= degrees and degrees < 157.5:
+			return "SE"
+		else if 157.5 <= degrees and degrees < 202.5:
+			return "S"
+		else if 202.5 <= degrees and degrees < 247.5:
+			return "SW"
+		else if 247.5 <= degrees and degrees < 292.5:
+			return "W"
+		else if 292.5 <= degrees and degrees < 337.5:
+			return "NW"
+		else if 337.5 <= degrees and degrees < 360.0:
+			return "N"
+		else:
+			return "ERR"
+		
+	@staticmethod
+	def rotationToAxis(rotation):
+		if rotation >= 0 and rotation < 360:
+			degrees = rotation
+		else:
+			degrees = ((rotation - 90) % 360)
+			if degrees < 0:
+				degrees += 360.0
+
+		if 0 <= degrees and degrees < 67.5:
+			degrees = "x-"
+		else if 67.5 <= degrees and degrees < 112.5:
+			degrees = "z-"
+		else if 112.5 <= degrees and degrees < 202.5:
+			degrees = "x+"
+		else if 202.5 <= degrees and degrees < 292.5:
+			degrees = "z+"
+		else if 292.5 <= degrees and degrees < 360.0:
+			degrees = "x-"
+	
+		return degrees
+	
+	class Colors:
+		Black = "§0"
+		Navy = "§1"
+		Green = "§2"
+		Blue = "§3"
+		Red = "§4"
+		Purple = "§5"
+		Gold = "§6"
+		LightGray = "§7"
+		Gray = "§8"
+		DarkPurple = "§9"
+		LightGreen = "§a"
+		LightBlue = "§b"
+		Rose = "§c"
+		LightPurple = "§d"
+		Yellow = "§e"
+		White = "§f"
+	
+	class Color:
+		Black = "§0"
+		Navy = "§1"
+		Green = "§2"
+		Blue = "§3"
+		Red = "§4"
+		Purple = "§5"
+		Gold = "§6"
+		LightGray = "§7"
+		Gray = "§8"
+		DarkPurple = "§9"
+		LightGreen = "§a"
+		LightBlue = "§b"
+		Rose = "§c"
+		LightPurple = "§d"
+		Yellow = "§e"
+		White = "§f"
+	
+	
+	@staticmethod
 	def onPlayerMove(c):
 		Api.bind("playerMove", c)
 
