@@ -99,43 +99,38 @@ public class ScriptingApi extends Plugin  {
 		log.info(name + " initialized ("+version+")");
 		// Uncomment as needed.
 		etc.getLoader().addListener( PluginLoader.Hook.ARM_SWING, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.ATTACK, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BAN, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_BROKEN, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_CREATED, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_DESTROYED, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.CHAT, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.COMMAND, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.COMPLEX_BLOCK_CHANGE, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.COMPLEX_BLOCK_SEND, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.INVENTORY_CHANGE, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.CRAFTINVENTORY_CHANGE, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.EQUIPMENT_CHANGE, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.DISCONNECT, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.IPBAN, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.KICK, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.LOGIN, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.LOGINCHECK, l, this, PluginListener.Priority.MEDIUM);
-		// etc.getLoader().addListener( PluginLoader.Hook.NUM_HOOKS, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.PLAYER_MOVE, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.SERVERCOMMAND, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.TELEPORT, l, this, PluginListener.Priority.MEDIUM);
-		
-		
-		etc.getLoader().addListener( PluginLoader.Hook.ATTACK, l, this, PluginListener.Priority.MEDIUM);
-		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_BROKEN, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_PHYSICS, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_PLACE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.BLOCK_RIGHTCLICKED, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.CHAT, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.COMMAND, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.DAMAGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.DISCONNECT, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.EXPLODE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.FLOW, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.HEALTH_CHANGE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.IGNITE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.IPBAN, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.ITEM_DROP, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.ITEM_PICK_UP, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.ITEM_USE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.KICK, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.LIQUID_DESTROY, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.LOGIN, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.LOGINCHECK, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.OPEN_INVENTORY, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.MOB_SPAWN, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.PLAYER_MOVE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.REDSTONE_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.SERVERCOMMAND, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.SIGN_CHANGE, l, this, PluginListener.Priority.MEDIUM);
+		etc.getLoader().addListener( PluginLoader.Hook.SIGN_SHOW, l, this, PluginListener.Priority.MEDIUM);		
+		etc.getLoader().addListener( PluginLoader.Hook.TELEPORT, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_COLLISION, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_CREATE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_DAMAGE, l, this, PluginListener.Priority.MEDIUM);
@@ -143,7 +138,6 @@ public class ScriptingApi extends Plugin  {
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_ENTERED, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_POSITIONCHANGE, l, this, PluginListener.Priority.MEDIUM);
 		etc.getLoader().addListener( PluginLoader.Hook.VEHICLE_UPDATE, l, this, PluginListener.Priority.MEDIUM);
-		
 	}
 	
 	public void loadAll () {
@@ -185,29 +179,30 @@ public class ScriptingApi extends Plugin  {
 			}
 		}
 		
-		dir = System.getProperty("user.dir").concat(File.separator+"py");
-		
-		directory = new File(dir);
-		files = directory.listFiles(new FileFilter() {
+		if(engines.get("py") != null) {
+			dir = System.getProperty("user.dir").concat(File.separator+"py");
 			
-			@Override
-			public boolean accept(File pathname) {
-				if(pathname.isFile()) return true;
-				return false;
-			}
-		});
-
-			
-		// some 'init'ial setup that needs to be done FIRST
-		doFile(dir+File.separator+"init.py", "py");
-
-		for (int index = 0; index < files.length; index++) {
-			if(!files[index].getName().equals("init.py")) {
-				doFile(files[index].getPath(), "py");
-				log.info("Processed plugin '"+files[index].getName()+"'.");
-			}
-		}
+			directory = new File(dir);
+			files = directory.listFiles(new FileFilter() {
 				
+				@Override
+				public boolean accept(File pathname) {
+					if(pathname.isFile()) return true;
+					return false;
+				}
+			});
+	
+				
+			// some 'init'ial setup that needs to be done FIRST
+			doFile(dir+File.separator+"init.py", "py");
+	
+			for (int index = 0; index < files.length; index++) {
+				if(!files[index].getName().equals("init.py")) {
+					doFile(files[index].getPath(), "py");
+					log.info("Processed plugin '"+files[index].getName()+"'.");
+				}
+			}
+		}			
 	}
 
 	// Sends a message to all players!
@@ -219,10 +214,6 @@ public class ScriptingApi extends Plugin  {
 	
 	public Server getJSContext () {
 		return etc.getServer();
-	}
-	
-	public void bubble (String type, String user, String text) {
-		log.info("["+abbr+"] ["+type+"] "+text);		
 	}
 
 	public class Listener extends PluginListener {
@@ -245,12 +236,39 @@ public class ScriptingApi extends Plugin  {
 		public Object[] trigger (String key, Object...args) {
 			return MinecraftJSApi.trigger(key, args);
 		}
-				
-		// remove the /* and */ from any function you want to use
-		// make sure you add them to the listener above as well!
 		
 		public void onPlayerMove(Player player, Location from, Location to) {
 			trigger("playerMove", new Object[] {getJSContext(), player, from, to});
+		}
+		
+		public void onSignShow(Player player, Sign sign) {
+			trigger("signShow", new Object[] {getJSContext(), player, sign});
+		}
+		
+		public boolean onSignChange (Player player, Sign sign) {
+			Object[] r = trigger("signChange", new Object[] {getJSContext(), player, sign});
+			
+			for(Object o : r) {
+				if(o != null && ((Boolean)o).booleanValue()) {
+					return true;
+				}
+			}
+
+			return false;
+			
+		}
+		
+		public boolean onOpenInventory (Player player, Inventory inventory) {
+			Object[] r = trigger("openInventory", new Object[] {getJSContext(), player, inventory});
+			
+			for(Object o : r) {
+				if(o != null && ((Boolean)o).booleanValue()) {
+					return true;
+				}
+			}
+
+			return false;
+			
 		}
 
 		public boolean onTeleport(Player player, Location from, Location to) {
@@ -334,7 +352,6 @@ public class ScriptingApi extends Plugin  {
 					return true;
 				}
 			}
-			//p.bubble("consoleCommand", "console", join(split, " "));
 			return false;
 		}
 

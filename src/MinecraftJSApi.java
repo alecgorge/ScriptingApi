@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
@@ -90,12 +92,10 @@ public class MinecraftJSApi {
 		if(!bindings.containsKey(key)) {
 			bindings.put(key, new ArrayList<Object>());
 		}
-		//System.out.println(o);
 		
 		bindings.get(key).add(o);
-		// trigger(key, new Object[] {}, "alecgorge", System.currentTimeMillis()/1000);
 	}
-	
+
 	public static Object[] trigger (String key, Object...args) {
 		ArrayList<Object> results = new ArrayList<Object>();
 		if(bindings.containsKey(key)) {
@@ -114,12 +114,24 @@ public class MinecraftJSApi {
 						e.printStackTrace();
 					}
 				}
-				//System.out.println(o);
-				/*if(type.endsWith("InterpretedFunction")) {
-					((InternalFunction) o).call();
-				}*/
 			}
 		}
 		return results.toArray();
+	}
+	
+	public static Object create (String className, Object[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
+		if(args.length < 1) {
+			return Class.forName(className).newInstance();
+		}
+		else if(args.length >= 1) {
+			Constructor<?>[] c = Class.forName(className).getConstructors();
+			for(int i = 0; i < c.length; i++) {
+				Constructor<?> thisC = c[i];
+				if(thisC.getParameterTypes().length == args.length) {
+					return thisC.newInstance(args);
+				}
+			}
+		}
+		return new Object();
 	}
 }
