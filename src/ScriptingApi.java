@@ -23,7 +23,7 @@ public class ScriptingApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private String name = "ScriptingApi";
-	private String version = "rev 8";
+	private String version = "rev 9";
 	protected String abbr = "ScriptingApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
