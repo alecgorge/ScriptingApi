@@ -134,4 +134,8 @@ public class MinecraftJSApi {
 		}
 		return new Object();
 	}
+	
+	public static Object getEnum (String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
+		return create(className, new Object[] {});
+	}
 }
