@@ -22,7 +22,7 @@ If you wish to make an instance of a new hMod class, say [Minecart](http://hmod.
 		/* x */ 0,
 		/* y */ 50,
 		/* z */ 10,
-		/* http://hmod.ricin.us/javadoc/index.html?Minecart.Type.html */ Api.enum("Minecart.Type").Minecart
+		/* http://hmod.ricin.us/javadoc/index.html?Minecart.Type.html */ Api.fetchEnum("Minecart.Type").Minecart
 	]);
 
 

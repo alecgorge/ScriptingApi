@@ -9,7 +9,7 @@ Api = {
 		}
 		return Minecraft.create(className, args);
 	},
-	enum : function (className) {
+	fetchEnum : function (className) {
 		return this.getEnum(className);
 	},
 	createItem : function (a,b,c) {
