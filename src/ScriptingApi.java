@@ -174,8 +174,10 @@ public class ScriptingApi extends Plugin  {
 
 		for (int index = 0; index < files.length; index++) {
 			if(!files[index].getName().equals("init.js")) {
-				doFile(files[index].getPath(), "js");
-				log.info("Processed plugin '"+files[index].getName()+"'.");
+				if(files[index].getName().endsWith("js")) {
+					doFile(files[index].getPath(), "js");
+					log.info("Processed plugin '"+files[index].getName()+"'.");
+				}
 			}
 		}
 		
@@ -198,8 +200,10 @@ public class ScriptingApi extends Plugin  {
 	
 			for (int index = 0; index < files.length; index++) {
 				if(!files[index].getName().equals("init.py")) {
-					doFile(files[index].getPath(), "py");
-					log.info("Processed plugin '"+files[index].getName()+"'.");
+					if(files[index].getName().endsWith("py")) {
+						doFile(files[index].getPath(), "py");
+						log.info("Processed plugin '"+files[index].getName()+"'.");
+					}
 				}
 			}
 		}			
