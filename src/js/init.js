@@ -4,9 +4,6 @@ Api = {
 	version : Minecraft.getPluginVersion(),
 	name : Minecraft.getPluginName(),
 	create : function (className, args) {
-		if(typeof(args) != "array") {
-			args = [];
-		}
 		return Minecraft.create(className, args);
 	},
 	fetchEnum : function (className) {

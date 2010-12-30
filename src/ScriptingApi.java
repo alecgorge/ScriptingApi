@@ -315,7 +315,7 @@ public class ScriptingApi extends Plugin  {
 		}
 
 		public boolean onCommand(Player player, String[] split) {
-			if(split[0].equals("/reloadscripts")) {
+			if(split[0] == "/reloadscripts") {
 				boolean isgroup = false;
 				for(String g : player.getGroups()) {
 					if( g.equals(minGroup) ) {
