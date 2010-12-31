@@ -162,7 +162,7 @@ public class ScriptingApi extends Plugin  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String group = pf.getString("min-group-level", "admin");
+		String group = pf.getString("min-group-level", "admins");
 		pf.save();
 		
 		if(group != null && !group.equals("")) {
@@ -319,7 +319,7 @@ public class ScriptingApi extends Plugin  {
 		}
 
 		public boolean onCommand(Player player, String[] split) {
-			if(split[0] == "/reloadscripts") {
+			if(split[0].equals( "/reloadscripts")) {
 				boolean isgroup = false;
 				for(String g : player.getGroups()) {
 					if( g.equals(minGroup) ) {

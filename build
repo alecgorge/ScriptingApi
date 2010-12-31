@@ -1,0 +1,6 @@
+#!/bin/bash
+
+java -jar ecj-3.6.1.jar -d bin -source 1.6 -cp deps/Minecraft_Mod.jar:deps/minecraft_server.jar src
+cd bin
+jar cvf ScriptingApi.jar *.class
+mv ScriptingApi.jar ../jar
