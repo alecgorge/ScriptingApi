@@ -100,7 +100,7 @@ public class MinecraftJSApi {
 		ArrayList<Object> results = new ArrayList<Object>();
 		if(bindings.containsKey(key)) {
 			for(Object o : bindings.get(key)) {
-				if(o.getClass().toString().endsWith("InterpretedFunction")) {
+				//if(o.getClass().toString().endsWith("InterpretedFunction")) {
 					try {
 					    Collection c = ScriptingApi.invoc.values();
 					    Iterator itr = c.iterator();
@@ -113,7 +113,7 @@ public class MinecraftJSApi {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}
+				//}
 			}
 		}
 		return results.toArray();
