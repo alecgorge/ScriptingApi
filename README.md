@@ -5,7 +5,7 @@ JSApi is a plugin that allows you to create plugins for hMod in pure Javascript.
 ## Loading new Javascript plugins
 
 * Add a file to the js/ directory with the extension .js .
-* Use the /reloadjs command.
+* Use the /reloadscripts command.
 * Your plugin is loaded!
 
 ## Quick Examples
