@@ -25,8 +25,10 @@ Api.onCommand(function(player, split) {
     } else {
       // grab last argument, should be numeric for delay
       var delay = args.pop();
-      if (delay.toString().search(/^-?[0-9]+$/) == 0) {
 
+      if (delay.toString().search(/^-?[0-9]+$/) != 0) {
+        player.sendMessage("Last argument must be a numeric delay in ms");
+      } else {
         //concatenate message together
         var msg = args[0];
         for(i=1;i<args.length;i++) msg += " "+ args[i];
