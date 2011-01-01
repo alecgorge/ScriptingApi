@@ -3,6 +3,12 @@ Api = {
 	server : Minecraft.getServer(),
 	version : Minecraft.getPluginVersion(),
 	name : Minecraft.getPluginName(),
+	create : function (className, args) {
+		return Minecraft.create(className, args);
+	},
+	fetchEnum : function (className) {
+		return this.getEnum(className);
+	},
 	createItem : function (a,b,c) {
 		if(typeof(a) == "undefined") return Minecraft.createItem();
 		else if(typeof(c) == "undefined") return Minecraft.createItem(a,b);
