@@ -3,12 +3,6 @@ Api = {
 	server : Minecraft.getServer(),
 	version : Minecraft.getPluginVersion(),
 	name : Minecraft.getPluginName(),
-	create : function (className, args) {
-		return Minecraft.create(className, args);
-	},
-	fetchEnum : function (className) {
-		return this.getEnum(className);
-	},
 	createItem : function (a,b,c) {
 		if(typeof(a) == "undefined") return Minecraft.createItem();
 		else if(typeof(c) == "undefined") return Minecraft.createItem(a,b);
@@ -26,6 +20,9 @@ Api = {
 	createHitBlox : function (player) {
 		return Minecraft.createHitBlox(player);
 	},
+	loadJar: function (pathRelativeToRoot) {
+		Minecraft.loadJar(java.lang.System.getProperty("user.dir") + "/" + pathRelativeToRoot);
+	},
 	bind : function (key, callback) {
 		Minecraft.bind(key, callback);
 	},
@@ -34,122 +31,33 @@ Api = {
 		if(typeof(notInGroup) == "undefined") notInGroup = false;
 		Minecraft.broadcast(message, group, notInGroup);
 	},
-	onArmSwing : function (c) { this.bind("armSwing", c); },
-	onAttack : function (c) { this.bind("attack", c); },
-	onBan : function (c) { this.bind("ban", c); },
-	onBlockBroken : function (c) { this.bind("blockBroken", c); },
-	onBlockCreated : function (c) { this.bind("blockCreated", c); },
-	onBlockDestroyed : function (c) { this.bind("blockDestroyed", c); },
-	onBlockPhysics : function (c) { this.bind("blockPhysics", c); },
-	onBlockPlace : function (c) { this.bind("blockPlace", c); },
-	onBlockRightclicked : function (c) { this.bind("blockRightclicked", c); },
-	onChat : function (c) { this.bind("chat", c); },
-	onCommand : function (c) { this.bind("command", c); },
-	onDamage : function (c) { this.bind("damage", c); },
-	onDisconnect : function (c) { this.bind("disconnect", c); },
-	onExplode : function (c) { this.bind("explode", c); },
-	onFlow : function (c) { this.bind("flow", c); },
-	onHealthChange : function (c) { this.bind("healthChange", c); },
-	onIgnite : function (c) { this.bind("ignite", c); },
-	onIpban : function (c) { this.bind("ipban", c); },
-	onItemDrop : function (c) { this.bind("itemDrop", c); },
-	onItemPick : function (c) { this.bind("itemPick", c); },
-	onItemUse : function (c) { this.bind("itemUse", c); },
-	onKick : function (c) { this.bind("kick", c); },
-	onLiquidDestroy : function (c) { this.bind("liquidDestroy", c); },
-	onLogin : function (c) { this.bind("login", c); },
-	onLogincheck : function (c) { this.bind("logincheck", c); },
-	onOpenInventory : function (c) { this.bind("openInventory", c); },
-	onMobSpawn : function (c) { this.bind("mobSpawn", c); },
-	onPlayerMove : function (c) { this.bind("playerMove", c); },
-	onRedstoneChange : function (c) { this.bind("redstoneChange", c); },
-	onServercommand : function (c) { this.bind("servercommand", c); },
-	onSignChange : function (c) { this.bind("signChange", c); },
-	onSignShow : function (c) { this.bind("signShow", c); },
-	onTeleport : function (c) { this.bind("teleport", c); },
-	onVehicleCollision : function (c) { this.bind("vehicleCollision", c); },
-	onVehicleCreate : function (c) { this.bind("vehicleCreate", c); },
-	onVehicleDamage : function (c) { this.bind("vehicleDamage", c); },
-	onVehicleDestroyed : function (c) { this.bind("vehicleDestroyed", c); },
-	onVehicleEntered : function (c) { this.bind("vehicleEntered", c); },
-	onVehiclePositionchange : function (c) { this.bind("vehiclePositionchange", c); },
-	onVehicleUpdate : function (c) { this.bind("vehicleUpdate", c); },
-
-	parsers : {
-		'all' : function (input) {
-			return [true, input];
-		},
-		'number' : function (input) {
-			var n = parseInt(input);
-			if(isNaN(n)) {
-				return false;
-			}
-			return [true, n];
-		},
-		'block' : function (input) {
-			var lower = input.toLowerCase();
-			var id = -1;
-			
-			if(isNaN(parseInt(input))) {
-				for(var i in Items) {
-					if(i.toLowerCase() == lower) {
-						id = Items[i];
-						break;
-					}
-				}
-			}
-			else {
-				id = parseInt(input);
-			}
-			
-			if(typeof(ItemIds[id]) == "string") {
-				return [true, id];
-			}
-			
-			return false;
-		},
-		'string' : function (input) {
-			return [true, input+""];
-		},
-		
-	},
-	parseArgs : function (requiredArgs, optionalArgs, split) {
+	registerCommand : function (command, callback) {
+		var command = split[0].substring(1);
 		var args = [];
 		if(split.length > 1) {
 			args = split.slice(1);
 		}
-		
-		if(args.length >= requiredArgs.length && args.length <= requiredArgs.length+optionalArgs.length) {
-			var r = [];
-			// test required
-			for(var i in requiredArgs) {
-				var res = this.parsers[requiredArgs[i]](args[i]);
-				if(res === false) {
-					return false;
-				}
-				r.push(res[1]);
-			}
-			
-			if(optionalArgs.length > 0) {
-				for(var i in optionalArgs) {
-					var argIndex = requiredArgs.length - 1 + i;
-					if(argIndex < args.length) {
-						var res = this.parsers[optionalArgs[i]](args[argIndex]);
-						if(res === false) {
-							return false;
-						}
-						r.push(res[1]);
-					}
-				}
-			}
-			
-			return r;
-		}
-		return false;
+		callback.apply(this.server, args);
 	},
-	isCommand : function(testCommand, split) {
-		return !(split[0].substring(1) != testCommand);
-	}
+	onPlayerMove : function (c) { this.bind("playerMove", c); },
+	onTeleport : function (c) { this.bind("teleport", c); },
+	onLoginChecks : function (c) { this.bind("loginChecks", c); },
+	onLogin : function (c) { this.bind("login", c); },
+	onDisconnect : function (c) { this.bind("disconnect", c); },
+	onChat : function (c) { this.bind("chat", c); },
+	onCommand : function (c) { this.bind("command", c); },
+	onConsoleCommand : function (c) { this.bind("consoleCommand", c); },
+	onBan : function (c) { this.bind("ban", c); },
+	onIpBan : function (c) { this.bind("ipBan", c); },
+	onKick : function (c) { this.bind("kick", c); },
+	onBlockCreate : function (c) { this.bind("blockCreate", c); },
+	onBlockDestroy : function (c) { this.bind("blockDestroy", c); },
+	onArmSwing : function (c) { this.bind("armSwing", c); },
+	onInventoryChange : function (c) { this.bind("inventoryChange", c); },
+	onCraftInventoryChange : function (c) { this.bind("craftInventoryChange", c); },
+	onEquipmentChange : function (c) { this.bind("equipmentChange", c); },
+	onComplexBlockChange : function (c) { this.bind("complexBlockChange", c); },
+	onSendComplexBlock : function (c) { this.bind("sendComplexBlock", c); },
 };
 
 /* Directions */
@@ -249,7 +157,6 @@ function BlockBuilder() {
 		}
 		
 		this.blockRef[""+x+y+z] = this.blocks.push([id, x, y, z]);
-		return this;
 	};
 	
 	this.addPrism = function (id, start, length, width, height) {
@@ -264,10 +171,7 @@ function BlockBuilder() {
 			for(var j = sy; j <= ey; j++)
 				for(var f = sz; f < ez; f++)
 					this.add(id, i, j, f);
-		return this;
 	};
-	
-	this.prism = this.addPrism;
 	
 	this.attachTo = function(x, y, z, rot) {
 		var dir = Api.rotationToAxis(rot);
@@ -306,138 +210,12 @@ function BlockBuilder() {
 			else if(doX && !doZ)
 				Api.server.setBlockAt(ref[0], x - ref[3], y + ref[2], z + ref[1]);
 		}
-		return this;
 	}
-	
-	this.line = function (id,start,end) {
-		var arrmax = function() {
-			var max = this[0];
-			var len = this.length;
-			for (var i = 1; i < len; i++) if (this[i] > max) max = this[i];
-			return max;
-		};
-	
-		function pointsInLine (p1, p2) {
-			var pxd = p2['x'] - p1['x'];
-			var pzd = p2['z'] - p1['z'];
-			var pyd = p2['y'] - p1['y'];
-
-			// Find out steps
-			var steps = arrmax(p1['x'], p1['y'], p2['x'], p2['y'], p1['z'], p2['z']);
-
-			var coords = [p1];
-
-			for (var i = 0; i < steps; i++)
-				coords.push([
-					Math.round(p1.x += pxd / steps),
-					Math.round(p1.y += pyd / steps),
-					Math.round(p1.z += pzd / steps)
-				]);
-				
-			return coords;
-		}
-		var points = pointsInLine({x:start[0],y:start[1],z:start[2]},{x:end[0],y:end[1],z:end[2]});
-		
-		for(var i in points) {
-			this.add(id,points[i].x,points[i].y,points[i].z);
-		}
-		return this;
-	};
-	
-	this.circle = function (type, center, radius) {
-		radius = parseInt(radius);
-		for(var i in center) { center[i] = parseInt(center[i]); }
-		
-		function calculateEllipse(x, y, a, b, steps) {
-			if (steps == null) steps = 36;
-			var points = [];
-
-			// Angle is given by Degree Value
-			// var beta = -angle * (Math.PI / 180); //(Math.PI/180) converts Degree Value into Radians
-			var sinbeta = 1;//Math.sin(beta);
-			var cosbeta = 1;//Math.cos(beta);
-
-			for (var i = 0; i < 360; i += 360 / steps) {
-				var alpha = i * (Math.PI / 180);
-				var sinalpha = Math.sin(alpha);
-				var cosalpha = Math.cos(alpha);
-
-				var X = x + (a * cosalpha * cosbeta - b * sinalpha * sinbeta);
-				var Y = y + (a * cosalpha * sinbeta + b * sinalpha * cosbeta);
-
-				points.push([Math.round(X), Math.round(Y)]);
-			}
-
-			return points;
-		}
-		function ellipse (xc, yc, xr, yr) {
-			var points = [];
-			for(var xcoord = 0-xr; xcoord <= xr; xcoord++) {
-				var angle = Math.atan2(xcoord, ycoord);
-				points.push([xc+Math.cos(angle)*xr, yc+Math.sin(angle)*yr]);
-			}
-					
-			return points;
-		}
-		
-		var points = calculateEllipse(center[0], center[2], radius/2, radius/2,  36);
-		for(var i in points) {
-			this.add(type, points[i][0], center[1], points[i][1]);
-		}
-		
-		return this;
-	};
-	
-	this.sphere = function (type, center, radius) {
-		for(var i = 1; i < radius; i++)
-			this.circle(type, [center[0], center[1]-(radius-i), center[2]], i);
-		for(var i = radius; i > 0; i--)
-			this.circle(type, [center[0], center[1]+(radius-i), center[2]], i);
-		return this;
-	};
-	
-	this.pyramid = function (type, start, length, width) {
-		var i = 0;
-		while(i !== false) {
-			this.prism(type, [start[0]+i, start[1]+i, start[2]+i], length, width, 1);
-			
-			i++;
-			length -= 2;
-			width -= 2;
-			
-			if(length < 1 || width < 1) i = false;
-		}
-		return this;
-	}
-	
-    this.invertedCone = function (type, center, radius, height) {
-		var new_r = radius;
-		for (var y = -1; y < height-1; y++) {
-			new_r = radius - (radius * (y/height));
-			this.circle(type, center, new_r);
-		}
-		return this;		
-    };
-
-    this.cone = function (type, center, radius, height) {
-		var new_r;
-		for (var y = -1; y < height-1; y++) {
-			new_r = (radius * (y/height));
-			this.circle(type, center, new_r);
-		}
-		return this;
-    };
-	
-	this.cylinder = function (id, center, height, radius) {
-		for (var y = 0; y < height; y++)
-			this.circle(id, [center[0], center[1]+y, center[2]], radius);
-		return this;
-	};
 	
 	this.removeBlock = function(x, y, z) {
-		delete this.blocks[this.blockRef[""+x+y+z]];
-		delete this.blockRef[""+x+y+z];
-		return this;
+		var ref = this.blockRef[""+x+y+z];
+		this.blocks[ref] = null;
+		this.blockRef[""+x+y+z] = null;
 	};
 }
 

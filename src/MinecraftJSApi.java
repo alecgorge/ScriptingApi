@@ -56,33 +56,31 @@ public class MinecraftJSApi {
 		return new HitBlox((Player) p);
 	}
 
+	public static class PlayerRunnable implements Runnable {
+		protected Invocable invoc;
+		protected Object obj;
+		protected String func;
+		
+		public PlayerRunnable(Invocable i, Object o, String f) {
+			invoc = i;
+			obj = o;
+			func = f;
+		}
+	
+	    public void run() {
+			try {
+				invoc.invokeMethod(obj, func, new Object[] {});
+			} catch (ScriptException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-  public static class PlayerRunnable implements Runnable {
-    protected Invocable invoc;
-    protected Object obj;
-    protected String func;
-
-    public PlayerRunnable(Invocable i, Object o, String f) {
-      invoc = i;
-      obj = o;
-      func = f;
-    }
-
-    public void run() {
-      try {
-        invoc.invokeMethod(obj, func, new Object[] {});
-      } catch (ScriptException e) {
-        e.printStackTrace();
-      } catch (NoSuchMethodException e) {
-        e.printStackTrace();
-      }
-    }
-    
-  }
-
-  public static PlayerRunnable createRunnable(Object obj) {
-    return new MinecraftJSApi.PlayerRunnable(ScriptingApi.invoc.get("js"), obj, "run");
-  }
+	public static PlayerRunnable createRunnable(Object obj) {
+		return new MinecraftJSApi.PlayerRunnable(ScriptingApi.invoc.get("js"), obj, "run");
+	}
 	
 	public static Item createItem(int a, int b, int c) {
 		return new Item(a,b,c);

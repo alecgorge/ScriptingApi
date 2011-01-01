@@ -177,174 +177,167 @@ class Api:
 		Yellow = "§e"
 		White = "§f"
 	
+	@staticmethod
+	def onArmSwing(c):
+		Api.bind("armSwing", c)
+	
+	@staticmethod
+	def onAttack(c):
+		Api.bind("attack", c)
+	
+	@staticmethod
+	def onBan(c):
+		Api.bind("ban", c)
+	
+	@staticmethod
+	def onBlockBroken(c):
+		Api.bind("blockBroken", c)
+	
+	@staticmethod
+	def onBlockCreated(c):
+		Api.bind("blockCreated", c)
+	
+	@staticmethod
+	def onBlockDestroyed(c):
+		Api.bind("blockDestroyed", c)
+	
+	@staticmethod
+	def onBlockPhysics(c):
+		Api.bind("blockPhysics", c)
+	
+	@staticmethod
+	def onBlockPlace(c):
+		Api.bind("blockPlace", c)
+	
+	@staticmethod
+	def onBlockRightclicked(c):
+		Api.bind("blockRightclicked", c)
+	
+	@staticmethod
+	def onChat(c):
+		Api.bind("chat", c)
+	
+	@staticmethod
+	def onCommand(c):
+		Api.bind("command", c)
+	
+	@staticmethod
+	def onDamage(c):
+		Api.bind("damage", c)
+	
+	@staticmethod
+	def onDisconnect(c):
+		Api.bind("disconnect", c)
+	
+	@staticmethod
+	def onExplode(c):
+		Api.bind("explode", c)
+	
+	@staticmethod
+	def onFlow(c):
+		Api.bind("flow", c)
+	
+	@staticmethod
+	def onHealthChange(c):
+		Api.bind("healthChange", c)
+	
+	@staticmethod
+	def onIgnite(c):
+		Api.bind("ignite", c)
+	
+	@staticmethod
+	def onIpban(c):
+		Api.bind("ipban", c)
+	
+	@staticmethod
+	def onItemDrop(c):
+		Api.bind("itemDrop", c)
+	
+	@staticmethod
+	def onItemPick(c):
+		Api.bind("itemPick", c)
+	
+	@staticmethod
+	def onItemUse(c):
+		Api.bind("itemUse", c)
+	
+	@staticmethod
+	def onKick(c):
+		Api.bind("kick", c)
+	
+	@staticmethod
+	def onLiquidDestroy(c):
+		Api.bind("liquidDestroy", c)
+	
+	@staticmethod
+	def onLogin(c):
+		Api.bind("login", c)
+	
+	@staticmethod
+	def onLogincheck(c):
+		Api.bind("logincheck", c)
+	
+	@staticmethod
+	def onOpenInventory(c):
+		Api.bind("openInventory", c)
+	
+	@staticmethod
+	def onMobSpawn(c):
+		Api.bind("mobSpawn", c)
 	
 	@staticmethod
 	def onPlayerMove(c):
 		Api.bind("playerMove", c)
-
+	
+	@staticmethod
+	def onRedstoneChange(c):
+		Api.bind("redstoneChange", c)
+	
+	@staticmethod
+	def onServercommand(c):
+		Api.bind("servercommand", c)
+	
+	@staticmethod
+	def onSignChange(c):
+		Api.bind("signChange", c)
+	
+	@staticmethod
+	def onSignShow(c):
+		Api.bind("signShow", c)
+	
 	@staticmethod
 	def onTeleport(c):
 		Api.bind("teleport", c)
-
-	@staticmethod
-	def onLoginChecks(c):
-		Api.bind("loginChecks", c)
-
-	@staticmethod
-	def onLogin(c):
-		Api.bind("login", c)
-
-	@staticmethod
-	def onDisconnect(c):
-		Api.bind("disconnect", c)
-
-	@staticmethod
-	def onChat(c):
-		Api.bind("chat", c)
-
-	@staticmethod
-	def onCommand(c):
-		Api.bind("command", c)
-
-	@staticmethod
-	def onConsoleCommand(c):
-		Api.bind("consoleCommand", c)
-
-	@staticmethod
-	def onBan(c):
-		Api.bind("ban", c)
-
-	@staticmethod
-	def onIpBan(c):
-		Api.bind("ipBan", c)
-
-	@staticmethod
-	def onKick(c):
-		Api.bind("kick", c)
-
-	@staticmethod
-	def onBlockCreate(c):
-		Api.bind("blockCreate", c)
-
-	@staticmethod
-	def onBlockDestroy(c):
-		Api.bind("blockDestroy", c)
-
-	@staticmethod
-	def onArmSwing(c):
-		Api.bind("armSwing", c)
-
-	@staticmethod
-	def onInventoryChange(c):
-		Api.bind("inventoryChange", c)
-
-	@staticmethod
-	def onCraftInventoryChange(c):
-		Api.bind("craftInventoryChange", c)
-
-	@staticmethod
-	def onEquipmentChange(c):
-		Api.bind("equipmentChange", c)
-
-	@staticmethod
-	def onComplexBlockChange(c):
-		Api.bind("complexBlockChange", c)
-
-	@staticmethod
-	def onSendComplexBlock(c):
-		Api.bind("sendComplexBlock", c)
-	@staticmethod
-	def onConsoleCommand(c):
-		Api.bind("onConsoleCommand", c)
-
-	@staticmethod
-	def onBlockBreak(c):
-		Api.bind("onBlockBreak", c)
-
-	@staticmethod
-	def onBlockPlace(c):
-		Api.bind("onBlockPlace", c)
-
-	@staticmethod
-	def onBlockPhysics(c):
-		Api.bind("onBlockPhysics", c)
-
-	@staticmethod
-	def onBlockRightClicked(c):
-		Api.bind("onBlockRightClicked", c)
-
-	@staticmethod
-	def onDamage(c):
-		Api.bind("onDamage", c)
-
-	@staticmethod
-	def onExplode(c):
-		Api.bind("onExplode", c)
-
-	@staticmethod
-	def onFlow(c):
-		Api.bind("onFlow", c)
-
-	@staticmethod
-	def onHealthChange(c):
-		Api.bind("onHealthChange", c)
-
-	@staticmethod
-	def onIgnite(c):
-		Api.bind("onIgnite", c)
-
-	@staticmethod
-	def onItemDrop(c):
-		Api.bind("onItemDrop", c)
-
-	@staticmethod
-	def onItemPickUp(c):
-		Api.bind("onItemPickUp", c)
-
-	@staticmethod
-	def onItemUse(c):
-		Api.bind("onItemUse", c)
-
-	@staticmethod
-	def onLiquidDestroy(c):
-		Api.bind("onLiquidDestroy", c)
-
-	@staticmethod
-	def onMobSpawn(c):
-		Api.bind("onMobSpawn", c)
-
-	@staticmethod
-	def onRedstoneChange(c):
-		Api.bind("onRedstoneChange", c)
-
+	
 	@staticmethod
 	def onVehicleCollision(c):
-		Api.bind("onVehicleCollision", c)
-
-	@staticmethod
-	def onVehicleDamage(c):
-		Api.bind("onVehicleDamage", c)
-
+		Api.bind("vehicleCollision", c)
+	
 	@staticmethod
 	def onVehicleCreate(c):
-		Api.bind("onVehicleCreate", c)
-
+		Api.bind("vehicleCreate", c)
+	
+	@staticmethod
+	def onVehicleDamage(c):
+		Api.bind("vehicleDamage", c)
+	
 	@staticmethod
 	def onVehicleDestroyed(c):
-		Api.bind("onVehicleDestroyed", c)
-
+		Api.bind("vehicleDestroyed", c)
+	
 	@staticmethod
-	def onVehicleEnter(c):
-		Api.bind("onVehicleEnter", c)
-
+	def onVehicleEntered(c):
+		Api.bind("vehicleEntered", c)
+	
 	@staticmethod
-	def onVehiclePositionChange(c):
-		Api.bind("onVehiclePositionChange", c)
-
+	def onVehiclePositionchange(c):
+		Api.bind("vehiclePositionchange", c)
+	
 	@staticmethod
 	def onVehicleUpdate(c):
-		Api.bind("onVehicleUpdate", c)
-	
+		Api.bind("vehicleUpdate", c)
+
+		
 Items = {
 	"Air" : 0, "Stone" : 1, "Grass" : 2, "Dirt" : 3, "Cobblestone" : 4, "Wood" : 5, "Sapling" : 6, "Bedrock" : 7, "Water" : 8, "Stationary water" : 9,
 	"Lava" : 10, "Stationary lava" : 11, "Sand" : 12, "Gravel" : 13, "Gold ore" : 14, "Iron ore" : 15, "Coal ore" : 16, "Log" : 17, "Leaves" : 18, "Sponge" : 19, "Glass" : 20,
