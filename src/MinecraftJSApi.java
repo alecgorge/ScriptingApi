@@ -55,6 +55,34 @@ public class MinecraftJSApi {
 	public static HitBlox createHitBlox(Object p) {
 		return new HitBlox((Player) p);
 	}
+
+
+  public static class PlayerRunnable implements Runnable {
+    protected Invocable invoc;
+    protected Object obj;
+    protected String func;
+
+    public PlayerRunnable(Invocable i, Object o, String f) {
+      invoc = i;
+      obj = o;
+      func = f;
+    }
+
+    public void run() {
+      try {
+        invoc.invokeMethod(obj, func, new Object[] {});
+      } catch (ScriptException e) {
+        e.printStackTrace();
+      } catch (NoSuchMethodException e) {
+        e.printStackTrace();
+      }
+    }
+    
+  }
+
+  public static PlayerRunnable createRunnable(Object obj) {
+    return new MinecraftJSApi.PlayerRunnable(ScriptingApi.invoc.get("js"), obj, "run");
+  }
 	
 	public static Item createItem(int a, int b, int c) {
 		return new Item(a,b,c);
@@ -100,20 +128,17 @@ public class MinecraftJSApi {
 		ArrayList<Object> results = new ArrayList<Object>();
 		if(bindings.containsKey(key)) {
 			for(Object o : bindings.get(key)) {
-				//if(o.getClass().toString().endsWith("InterpretedFunction")) {
-					try {
-					    Collection c = ScriptingApi.invoc.values();
-					    Iterator itr = c.iterator();
-					    while(itr.hasNext()) {
-					    	Invocable i = (Invocable)itr.next();
-
-							results.add(i.invokeMethod(o, "call", args));
-					    }
-					    	
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				//}
+				try {
+  		    Collection c = ScriptingApi.invoc.values();
+	  	    Iterator itr = c.iterator();
+			    while(itr.hasNext()) {
+			    	Invocable i = (Invocable)itr.next();
+						results.add(i.invokeMethod(o, "call", args));
+			    }
+	    	
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return results.toArray();

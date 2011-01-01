@@ -44,4 +44,5 @@ Api.onCommand(function (player, split) {
 		
 		return true;
 	}
+  return false;
 });

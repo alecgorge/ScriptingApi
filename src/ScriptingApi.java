@@ -171,6 +171,7 @@ public class ScriptingApi extends Plugin  {
 			
 		// some 'init'ial setup that needs to be done FIRST
 		doFile(dir+File.separator+"init.js", "js");
+    log.info("Processed init.js");
 
 		for (int index = 0; index < files.length; index++) {
 			if(!files[index].getName().equals("init.js")) {
