@@ -1,10 +1,17 @@
-# JSApi: a plugin for hMod
+# ScriptingApi : a plugin for hMod
 
-JSApi is a plugin that allows you to create plugins for hMod in pure Javascript. Every hook for hMod has been implemented so the results are limitless. Also, a few extra features were rolled in in order to make plugin development as painless as possible. All Javascript errors are stack traced in the console. If one plugin crashes, the others are unaffected.
+ScriptingApi is a plugin that allows you to create plugins for hMod in pure Javascript (or Python). Every hook for hMod has been implemented so the results are limitless. Also, a few extra features were rolled in in order to make plugin development as painless as possible. All Javascript errors are stack traced in the console. If one plugin crashes, the others are unaffected.
 
 ## Loading new Javascript plugins
 
 * Add a file to the js/ directory with the extension .js .
+* Use the /reloadscripts command.
+* Your plugin is loaded!
+
+## Loading new Python plugins
+
+* Put jython.jar in the plugins/ directory.
+* Add a file to the py/ directory with the extension .py .
 * Use the /reloadscripts command.
 * Your plugin is loaded!
 
