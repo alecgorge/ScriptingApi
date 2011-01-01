@@ -6,21 +6,38 @@
 
   Better demonstration of new delay functionality.
 
-  This script adds the /iceman command to the groups specified below in the configuration section.  What this does
-  is create a couple of blocks of glass under the player with the mode enabled.  As the player walks, more blocks will
-  be placed in front of him at the same height level.  Once the player walks away from the glass blocks, they "melt"
-  back into air.
+  This script adds the /iceman command to the groups specified below in the 
+  configuration section.  What this does is create a couple of blocks of glass
+  under the player with the mode enabled.  As the player walks, more blocks 
+  will be placed in front of him at the same height level.  Once the player 
+  walks away from the glass blocks, they "melt" back into air.
+
+  The command /iceman toggles this mode on or off.
+
+  Also note, that sneaking will allow blocks to "melt", as well as create the 
+  "ice" 1 block lower when moving, giving you a way of going down.
   
 */
 
 // CONFIGURATION
-var groups = Array("admins","mods","vip");  //which groups are allowed to use the command
-var delay = 3000;  // delay in ms for blocks to "melt" 
-var size = 1;      // radius of how many blocks to create
-var lookahead = 5; // lookahead multiplier to place more blocks when moving in a direction
-var blockID = 20;  // what Block ID to create ( 20 is glass )
+
+// ALLOWED GROUPS - these are which groups get to use the command
+var groups = Array("admins","mods","vip");  
+
+// MELT DELAY - delay in ms to check if player is near for block melting
+var delay = 3000;  
+
+// How many blocks in each direction to create around the iceman
+var size = 1;
+
+// Mmultiplier to create more blocks in the direction the player is moving
+var lookahead = 5; 
+
+// ID of the "ice" blocks to be created
+var blockID = 20;  
 
 
+// MAIN SCRIPT
 
 var enabled = Array();
 var posX = Array();
