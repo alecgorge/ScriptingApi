@@ -120,39 +120,37 @@ public class MinecraftJSApi {
 	}
 	
 	public static Object create (String className, Object[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
-		if(args.length < 1) {
-			return Class.forName(className).newInstance();
-		}
-		else if(args.length >= 1) {
-			Constructor<?>[] c = Class.forName(className).getConstructors();
-			for(int i = 0; i < c.length; i++) {
-				Constructor<?> thisC = c[i];
-				if(thisC.getParameterTypes().length == args.length) {
-					boolean stop = false;
-					for(int x = 0; x < args.length; x++) {
-						System.out.println(thisC.getParameterTypes()[x].getCanonicalName());
-						System.out.println(args[x].getClass().getCanonicalName());
-						
-						if(thisC.getParameterTypes()[x].getCanonicalName() == "int" && args[x].getClass().getCanonicalName() == "java.lang.Double") {
-							args[x] = new Integer(args[x].toString());
+		try {
+			if(args.length < 1) {
+				return Class.forName(className).newInstance();
+			} else if(args.length >= 1) {
+				Constructor<?>[] c = Class.forName(className).getConstructors();
+				for(int i = 0; i < c.length; i++) {
+					Constructor<?> thisC = c[i];
+					if(thisC.getParameterTypes().length == args.length) {
+						boolean stop = false;
+						for(int x = 0; x < args.length; x++) {
+							if(thisC.getParameterTypes()[x].getCanonicalName() == "int" && args[x].getClass().getCanonicalName() == "java.lang.Double") {
+								args[x] = ((Double)args[x]).intValue();
+							}
+							else if(thisC.getParameterTypes()[x].getCanonicalName() == "int" && args[x].getClass().getCanonicalName() == "java.lang.Integer") {
+								args[x] = ((Integer)args[x]).intValue();
+							}
+							else if(thisC.getParameterTypes()[x].getCanonicalName() != args[x].getClass().getCanonicalName()) {
+								stop = true;
+							}
 						}
-						else if(thisC.getParameterTypes()[x].getCanonicalName() != args[x].getClass().getCanonicalName()) {
-						//if(thisC.getParameterTypes()[x].getClass().getName().endsWith(".Class") && !args[x].getClass().getName().endsWith(".Class")) {
-							stop = true;
+						if(stop) {
+							continue;
 						}
 						else {
-							//System.out.println("Casting: "+args[x].getClass().getCanonicalName()+" to "+thisC.getParameterTypes()[x].getCanonicalName());
-							//args[x] = thisC.getParameterTypes()[x].cast(args[x]);
+							return thisC.newInstance(args);
 						}
-					}
-					if(stop) {
-						continue;
-					}
-					else {
-						return thisC.newInstance(args);
 					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return new Object();
 	}
