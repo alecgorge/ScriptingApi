@@ -34,6 +34,7 @@ Api.onCommand(function(player, split) {
         for(i=1;i<args.length;i++) msg += " "+ args[i];
 
         // create new object with a run() function to be run after the delay
+        // should be able to store any variables/objects needed in run() into the same object, like player below
         var obj = new Object();
         obj.player = player;
         obj.run = function() { this.player.sendMessage(msg); }
