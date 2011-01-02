@@ -8,8 +8,8 @@ last update: 1/2/2011
 */
 
 $in = file_get_contents("src/ScriptingApi.java");
-$comp = explode("<!-- ========== METHOD SUMMARY =========== -->", file_get_contents("http://hmod.ricin.us/javadoc/PluginListener.html"));
-preg_match_all('#<STRONG><A HREF="PluginListener.html.*">([a-zA-Z]+)</A></STRONG>#', $comp[1], $comp_matches);
+$comp = explode("<!-- ========== METHOD SUMMARY =========== -->", file_get_contents("http://mc.slaps.me/doc/PluginListener.html"));
+preg_match_all('#<B><A HREF="PluginListener\.html.*">([a-zA-Z]+)</A></B>#', $comp[1], $comp_matches);
 $comp_matches = $comp_matches[1];
 
 $parts['js'] = <<<EOT
