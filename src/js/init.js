@@ -217,22 +217,22 @@ Api.rotationToAxis = function (rotation) {
 
 /* Colors for text chat */
 Colors = {
-    Black : "§0",
-    Navy : "§1",
-    Green : "§2",
-    Blue : "§3",
-    Red : "§4",
-    Purple : "§5",
-    Gold : "§6",
-    LightGray : "§7",
-    Gray : "§8",
-    DarkPurple : "§9",
-    LightGreen : "§a",
-    LightBlue : "§b",
-    Rose : "§c",
-    LightPurple : "§d",
-    Yellow : "§e",
-    White : "§f"
+    Black : "\u00A70",
+    Navy : "\u00A71",
+    Green : "\u00A72",
+    Blue : "\u00A73",
+    Red : "\u00A74",
+    Purple : "\u00A75",
+    Gold : "\u00A76",
+    LightGray : "\u00A77",
+    Gray : "\u00A78",
+    DarkPurple : "\u00A79",
+    LightGreen : "\u00A7a",
+    LightBlue : "\u00A7b",
+    Rose : "\u00A7c",
+    LightPurple : "\u00A7d",
+    Yellow : "\u00A7e",
+    White : "\u00A7f"
 };
 Color = Colors;
 
