@@ -178,40 +178,36 @@ class Api:
 		White = "§f"
 	
 	@staticmethod
-	def onArmSwing(c):
-		Api.bind("armSwing", c)
+	def onPlayerMove(c):
+		Api.bind("playerMove", c)
 	
 	@staticmethod
-	def onAttack(c):
-		Api.bind("attack", c)
+	def onSignShow(c):
+		Api.bind("signShow", c)
 	
 	@staticmethod
-	def onBan(c):
-		Api.bind("ban", c)
+	def onSignChange(c):
+		Api.bind("signChange", c)
 	
 	@staticmethod
-	def onBlockBroken(c):
-		Api.bind("blockBroken", c)
+	def onOpenInventory(c):
+		Api.bind("openInventory", c)
 	
 	@staticmethod
-	def onBlockCreated(c):
-		Api.bind("blockCreated", c)
+	def onTeleport(c):
+		Api.bind("teleport", c)
 	
 	@staticmethod
-	def onBlockDestroyed(c):
-		Api.bind("blockDestroyed", c)
+	def onLoginChecks(c):
+		Api.bind("loginChecks", c)
 	
 	@staticmethod
-	def onBlockPhysics(c):
-		Api.bind("blockPhysics", c)
+	def onLogin(c):
+		Api.bind("login", c)
 	
 	@staticmethod
-	def onBlockPlace(c):
-		Api.bind("blockPlace", c)
-	
-	@staticmethod
-	def onBlockRightclicked(c):
-		Api.bind("blockRightclicked", c)
+	def onDisconnect(c):
+		Api.bind("disconnect", c)
 	
 	@staticmethod
 	def onChat(c):
@@ -222,12 +218,56 @@ class Api:
 		Api.bind("command", c)
 	
 	@staticmethod
-	def onDamage(c):
-		Api.bind("damage", c)
+	def onConsoleCommand(c):
+		Api.bind("consoleCommand", c)
 	
 	@staticmethod
-	def onDisconnect(c):
-		Api.bind("disconnect", c)
+	def onBan(c):
+		Api.bind("ban", c)
+	
+	@staticmethod
+	def onIpBan(c):
+		Api.bind("ipBan", c)
+	
+	@staticmethod
+	def onKick(c):
+		Api.bind("kick", c)
+	
+	@staticmethod
+	def onBlockCreate(c):
+		Api.bind("blockCreate", c)
+	
+	@staticmethod
+	def onBlockDestroy(c):
+		Api.bind("blockDestroy", c)
+	
+	@staticmethod
+	def onArmSwing(c):
+		Api.bind("armSwing", c)
+	
+	@staticmethod
+	def onAttack(c):
+		Api.bind("attack", c)
+	
+	@staticmethod
+	def onBlockBreak(c):
+		Api.bind("blockBreak", c)
+	
+	@staticmethod
+	def onBlockPlace(c):
+		Api.bind("blockPlace", c)
+	
+	@staticmethod
+	def onBlockPhysics(c):
+		Api.bind("blockPhysics", c)
+	
+	@staticmethod
+	def onBlockRightClicked(c):
+		Api.bind("blockRightClicked", c)
+	
+	@staticmethod
+	def onDamage(c):
+		Api.bind("damage", c)
 	
 	@staticmethod
 	def onExplode(c):
@@ -246,92 +286,52 @@ class Api:
 		Api.bind("ignite", c)
 	
 	@staticmethod
-	def onIpban(c):
-		Api.bind("ipban", c)
-	
-	@staticmethod
 	def onItemDrop(c):
 		Api.bind("itemDrop", c)
 	
 	@staticmethod
-	def onItemPick(c):
-		Api.bind("itemPick", c)
+	def onItemPickUp(c):
+		Api.bind("itemPickUp", c)
 	
 	@staticmethod
 	def onItemUse(c):
 		Api.bind("itemUse", c)
 	
 	@staticmethod
-	def onKick(c):
-		Api.bind("kick", c)
-	
-	@staticmethod
 	def onLiquidDestroy(c):
 		Api.bind("liquidDestroy", c)
-	
-	@staticmethod
-	def onLogin(c):
-		Api.bind("login", c)
-	
-	@staticmethod
-	def onLogincheck(c):
-		Api.bind("logincheck", c)
-	
-	@staticmethod
-	def onOpenInventory(c):
-		Api.bind("openInventory", c)
 	
 	@staticmethod
 	def onMobSpawn(c):
 		Api.bind("mobSpawn", c)
 	
 	@staticmethod
-	def onPlayerMove(c):
-		Api.bind("playerMove", c)
-	
-	@staticmethod
 	def onRedstoneChange(c):
 		Api.bind("redstoneChange", c)
-	
-	@staticmethod
-	def onServercommand(c):
-		Api.bind("servercommand", c)
-	
-	@staticmethod
-	def onSignChange(c):
-		Api.bind("signChange", c)
-	
-	@staticmethod
-	def onSignShow(c):
-		Api.bind("signShow", c)
-	
-	@staticmethod
-	def onTeleport(c):
-		Api.bind("teleport", c)
 	
 	@staticmethod
 	def onVehicleCollision(c):
 		Api.bind("vehicleCollision", c)
 	
 	@staticmethod
-	def onVehicleCreate(c):
-		Api.bind("vehicleCreate", c)
-	
-	@staticmethod
 	def onVehicleDamage(c):
 		Api.bind("vehicleDamage", c)
+	
+	@staticmethod
+	def onVehicleCreate(c):
+		Api.bind("vehicleCreate", c)
 	
 	@staticmethod
 	def onVehicleDestroyed(c):
 		Api.bind("vehicleDestroyed", c)
 	
 	@staticmethod
-	def onVehicleEntered(c):
-		Api.bind("vehicleEntered", c)
+	def onVehicleEnter(c):
+		Api.bind("vehicleEnter", c)
 	
 	@staticmethod
-	def onVehiclePositionchange(c):
-		Api.bind("vehiclePositionchange", c)
+	def onVehiclePositionChange(c):
+		Api.bind("vehiclePositionChange", c)
 	
 	@staticmethod
 	def onVehicleUpdate(c):
