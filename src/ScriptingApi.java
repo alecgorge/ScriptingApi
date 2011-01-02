@@ -23,7 +23,7 @@ public class ScriptingApi extends Plugin  {
 	private Listener l = new Listener(this);
 	public static final Logger log = Logger.getLogger("Minecraft");
 	private String name = "ScriptingApi";
-	private String version = "rev 9";
+	private String version = "rev 10";
 	protected String abbr = "ScriptingApi";
 	private ArrayList<PluginRegisteredListener> listeners = new ArrayList<PluginRegisteredListener>();
 
@@ -171,7 +171,7 @@ public class ScriptingApi extends Plugin  {
 			
 		// some 'init'ial setup that needs to be done FIRST
 		doFile(dir+File.separator+"init.js", "js");
-    log.info("Processed init.js");
+		log.info("Processed init.js");
 
 		for (int index = 0; index < files.length; index++) {
 			if(!files[index].getName().equals("init.js")) {
@@ -289,7 +289,7 @@ public class ScriptingApi extends Plugin  {
 		}
 
 		public String onLoginChecks(String user) {
-			Object[] r = trigger("blockCreate", new Object[] {getJSContext(), user});
+			Object[] r = trigger("loginChecks", new Object[] {getJSContext(), user});
 			
 			for(Object o : r) {
 				if(o != null) {
@@ -320,7 +320,7 @@ public class ScriptingApi extends Plugin  {
 		}
 
 		public boolean onCommand(Player player, String[] split) {
-			if(split[0].equals( "/reloadscripts")) {
+			if(split[0].equals("/reloadscripts")) {
 				boolean isgroup = false;
 				for(String g : player.getGroups()) {
 					if( g.equals(minGroup) ) {
@@ -399,67 +399,6 @@ public class ScriptingApi extends Plugin  {
 		public void onArmSwing(Player player) {
 			trigger("armSwing", new Object[] {getJSContext(), player});
 		}
-
-		public boolean onInventoryChange(Player player) {
-			Object[] r = trigger("inventoryChange", new Object[] {getJSContext(), player});
-			
-			for(Object o : r) {
-				if(o != null && ((Boolean)o).booleanValue()) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean onComplexBlockChange(Player player, ComplexBlock block) {
-			Object[] r = trigger("complexBlockChange", new Object[] {getJSContext(), player, block});
-			
-			for(Object o : r) {
-				if(o != null && ((Boolean)o).booleanValue()) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean onSendComplexBlock(Player player, ComplexBlock block) {
-			Object[] r = trigger("sendComplexBlock", new Object[] {getJSContext(), player, block});
-			
-			for(Object o : r) {
-				if(o != null && ((Boolean)o).booleanValue()) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean onCraftInventoryChange(Player player ) {
-			Object[] r = trigger("craftInventoryChange", new Object[] {getJSContext(), player});
-			
-			for(Object o : r) {
-				if(o != null && ((Boolean)o).booleanValue()) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean onEquipmentChange(Player player ) {
-			Object[] r = trigger("equipmentChange", new Object[] {getJSContext(), player});
-			
-			for(Object o : r) {
-				if(o != null && ((Boolean)o).booleanValue()) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-		
 		
 		public boolean onConsoleCommand(LivingEntity attacker, LivingEntity defender, java.lang.Integer amount) {
 			Object[] r = trigger("attack", new Object[] {getJSContext(), attacker, defender, amount});
