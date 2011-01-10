@@ -32,7 +32,49 @@ If you wish to make an instance of a new hMod class, say [Minecart](http://hmod.
 		/* http://hmod.ricin.us/javadoc/index.html?Minecart.Type.html */ Api.fetchEnum("Minecart.Type").Minecart
 	]);
 
+## Hook list
 
+	* `Api.onPlayerMove`
+	* `Api.onSignShow`
+	* `Api.onSignChange`
+	* `Api.onOpenInventory`
+	* `Api.onTeleport`
+	* `Api.onLoginChecks`
+	* `Api.onLogin`
+	* `Api.onDisconnect`
+	* `Api.onChat`
+	* `Api.onCommand`
+	* `Api.onConsoleCommand`
+	* `Api.onBan`
+	* `Api.onIpBan`
+	* `Api.onKick`
+	* `Api.onBlockCreate`
+	* `Api.onBlockDestroy`
+	* `Api.onArmSwing`
+	* `Api.onAttack`
+	* `Api.onBlockBreak`
+	* `Api.onBlockPlace`
+	* `Api.onBlockPhysics`
+	* `Api.onBlockRightClicked`
+	* `Api.onDamage`
+	* `Api.onExplode`
+	* `Api.onFlow`
+	* `Api.onHealthChange`
+	* `Api.onIgnite`
+	* `Api.onItemDrop`
+	* `Api.onItemPickUp`
+	* `Api.onItemUse`
+	* `Api.onLiquidDestroy`
+	* `Api.onMobSpawn`
+	* `Api.onRedstoneChange`
+	* `Api.onVehicleCollision`
+	* `Api.onVehicleDamage`
+	* `Api.onVehicleCreate`
+	* `Api.onVehicleDestroyed`
+	* `Api.onVehicleEnter`
+	* `Api.onVehiclePositionChange`
+	* `Api.onVehicleUpdate`
+	
 ## Info about the API
 
 * You can call all the native methods of Java objects. For example, when Player is an argument to a callback, you can use all the methods listed on [this page](http://hmod.ricin.us/javadoc/index.html?Player.html).

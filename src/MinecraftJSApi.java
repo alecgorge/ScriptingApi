@@ -127,13 +127,12 @@ public class MinecraftJSApi {
 		if(bindings.containsKey(key)) {
 			for(Object o : bindings.get(key)) {
 				try {
-  		    Collection c = ScriptingApi.invoc.values();
-	  	    Iterator itr = c.iterator();
-			    while(itr.hasNext()) {
-			    	Invocable i = (Invocable)itr.next();
+					Collection c = ScriptingApi.invoc.values();
+					Iterator itr = c.iterator();
+					while(itr.hasNext()) {
+						Invocable i = (Invocable)itr.next();
 						results.add(i.invokeMethod(o, "call", args));
-			    }
-	    	
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
