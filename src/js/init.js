@@ -7,7 +7,7 @@ Api = {
 		return Minecraft.create(className, args);
 	},
 	fetchEnum : function (className) {
-		return this.getEnum(className);
+		return Minecraft.getEnum(className);
 	},
 	createItem : function (a,b,c) {
 		if(typeof(a) == "undefined") return Minecraft.createItem();
